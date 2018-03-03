@@ -6,14 +6,13 @@ use GD::Graph::Cartesian;
 use Lingua::EN::Opinion;
 
 my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
+my $height     = shift || 400;
+my $width      = shift || 800;
+my $margin = 20;
 
 my $opinion = Lingua::EN::Opinion->new( file => $input_file );
 
 $opinion->analyze();
-
-my $height = 400;
-my $width  = 800;
-my $margin = 20;
 
 my $obj = GD::Graph::Cartesian->new(
     height   => $height,
