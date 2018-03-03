@@ -25,7 +25,7 @@ my $expected = [
     'I might get angry and decide to do something horrible.',
     'I might destroy the entire package and start from scratch.',
     'Then again, I might find it satisfying to have completed my this package.',
-    'You might even say its beautiful!',
+    'You might even say it's beautiful!',
 ];
 
 my $x = $obj->analyze;
