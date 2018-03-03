@@ -1,4 +1,7 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Corrected dist.ini links.
+
+0.01 2018-03-02 17:42:21
     - Minted by Dist::Zilla.
