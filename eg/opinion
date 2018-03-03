@@ -1,0 +1,15 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+use Lingua::EN::Opinion;
+
+my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
+
+my $opinion = Lingua::EN::Opinion->new( file => $input_file );
+
+$opinion->analyze();
+
+my %score;
+@score{ @{ $opinion->sentences } } = @{ $opinion->scores };
+use Data::Dumper;warn(__PACKAGE__,' L',__LINE__,". MARK: ",Dumper[map {"$_ => $score{$_}"} sort {$score{$b} <=> $score{$a}} @{ $opinion->sentences }]);
