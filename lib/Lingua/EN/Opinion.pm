@@ -2,7 +2,7 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the positive/negative sentiment of text
 
-our $VERSION = '0.0101';
+our $VERSION = '0.02';
 
 use Moo;
 use strictures 2;
@@ -39,6 +39,16 @@ The text file to analyze.
 has file => (
     is  => 'ro',
     isa => sub { die "File $_[0] does not exist" unless -e $_[0] },
+);
+
+=head2 text
+
+A text string to analyze instead of a text file.
+
+=cut
+
+has text => (
+      is  => 'ro',
 );
 
 =head2 sentences
@@ -82,7 +92,7 @@ Measure the positive/negative sentiment of text.
 sub analyze {
     my ($self) = @_;
 
-    my $contents = read_text( $self->file );
+    my $contents = $self->file ? read_text( $self->file ) : $self->text;
 
     $self->sentences( get_sentences($contents) );
 

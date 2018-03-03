@@ -1,6 +1,9 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Added the ability analyze a string, instead of just a file.
+
+0.0101 2018-03-03 09:39:23
     - Corrected dist.ini links.
 
 0.01 2018-03-02 17:42:21
