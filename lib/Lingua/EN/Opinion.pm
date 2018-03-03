@@ -84,12 +84,14 @@ sub analyze {
 
     $self->sentences( get_sentences($contents) );
 
+    my @sentences = map { $_ } @{ $self->sentences };
+
     my @scores;
 
     my $positive = Lingua::EN::Opinion::Positive->new();
     my $negative = Lingua::EN::Opinion::Negative->new();
 
-    for my $sentence ( @{ $self->sentences } ) {
+    for my $sentence ( @sentences ) {
         $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
 
         my @words = split /\s+/, $sentence;
