@@ -12,4 +12,7 @@ $opinion->analyze();
 
 my %score;
 @score{ @{ $opinion->sentences } } = @{ $opinion->scores };
-use Data::Dumper;warn(__PACKAGE__,' L',__LINE__,". MARK: ",Dumper[map {"$_ => $score{$_}"} sort {$score{$b} <=> $score{$a}} @{ $opinion->sentences }]);
+
+print "Most negative sentence:\n",
+    [ map {"$score{$_} => $_"} sort {$score{$a} <=> $score{$b}} @{ $opinion->sentences } ]->[0],
+    "\n";
