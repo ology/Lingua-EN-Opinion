@@ -1,0 +1,23 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+my $file = shift || '/Users/gene/Documents/data/opinion-lexicon/NRC-emotion-lexicon-wordlevel-alphabetized-v0.92.txt';
+
+my %index;
+
+open( my $fh, '<', $file )
+    or die "Can't read $file: $!";
+
+while ( my $line = <$fh> ) {
+    my ( $word, $emotion, $present ) = split /\s+/, $line;
+    $index{$word}->{$emotion} = $present;
+}
+
+for my $word ( sort keys %index ) {
+    print "$word => { ",
+        join( ', ', map { "$_ => $index{$word}->{$_}" } sort keys %{ $index{$word} } ),
+        " },\n";
+}
+
+close $fh;
