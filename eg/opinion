@@ -14,5 +14,5 @@ my %score;
 @score{ @{ $opinion->sentences } } = @{ $opinion->scores };
 
 print "Most negative sentence:\n",
-    [ map {"$score{$_} => $_"} sort {$score{$a} <=> $score{$b}} @{ $opinion->sentences } ]->[0],
+    [ map {"$score{$_} => $_"} sort { $score{$a} <=> $score{$b} } @{ $opinion->sentences } ]->[0],
     "\n";
