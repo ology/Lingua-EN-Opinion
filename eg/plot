@@ -4,16 +4,21 @@ use warnings;
 
 use GD::Graph::Cartesian;
 use Lingua::EN::Opinion;
+use Math::CMA qw( central_moving_averages );
 
 my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
-my $bins       = shift || 1;
-my $height     = shift || 400;
+my $cma        = shift || 0;  # To use central_moving_averages.
+my $param      = shift || 1;  # distance for cma, bins for averaged_score
 my $width      = shift || 800;
-my $margin = 20;
+my $height     = shift || 400;
+my $margin     = 20;
 
 my $opinion = Lingua::EN::Opinion->new( file => $input_file );
 
 $opinion->analyze();
+
+my $averaged = $cma ? [ central_moving_averages( $param, $opinion->scores ) ]
+                    : $opinion->averaged_score($param);
 
 my $obj = GD::Graph::Cartesian->new(
     height   => $height,
@@ -27,7 +32,7 @@ my $counter = 0;
 
 my ( $last_x, $last_y );
 
-for my $score ( @{ $opinion->averaged_score($bins) } ) {
+for my $score ( @$averaged ) {
     $counter++;
 
     if ( defined $last_x && defined $last_y ) {
