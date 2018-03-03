@@ -10,6 +10,7 @@ use namespace::clean;
 
 use Lingua::EN::Opinion::Positive;
 use Lingua::EN::Opinion::Negative;
+use Lingua::EN::Opinion::Emotion;
 
 use File::Slurper qw( read_text );
 use Lingua::EN::Sentence qw( get_sentences );
@@ -20,8 +21,6 @@ use Statistics::Lite qw( mean );
   use Lingua::EN::Opinion;
   my $opinion = Lingua::EN::Opinion->new( file => '/some/file.txt' );
   $opinion->analyze();
-  my $sentences = $opinion->sentences;
-  my $scores = $opinion->scores;
   my $averaged = $opinion->averaged_score(5);
 
 =head1 DESCRIPTION
@@ -75,6 +74,17 @@ has scores => (
     init_arg => undef,
 );
 
+=head2 nrc_scores
+
+Computed result.
+
+=cut
+
+has nrc_scores => (
+    is       => 'rw',
+    init_arg => undef,
+);
+
 =head1 METHODS
 
 =head2 new()
@@ -85,9 +95,10 @@ Create a new C<Lingua::EN::Opinion> object.
 
 =head2 analyze()
 
-  $score = $opinion->analyze();
+  $opinion->analyze();
 
-Measure the positive/negative sentiment of text.
+Measure the positive/negative sentiment of text.  This method sets the B<scores>
+and B<sentences> attributes.
 
 =cut
 
@@ -154,6 +165,54 @@ sub averaged_score {
     return \@averaged;
 }
 
+=head2 nrc_sentiment()
+
+Compute the NRC sentiment of the given text.
+
+This is given by a 0/1 list of these 10 emotional elements:
+
+  anger
+  anticipation
+  disgust
+  fear
+  joy
+  negative
+  positive
+  sadness
+  surprise
+  trust
+
+=cut
+
+sub nrc_sentiment {
+    my ($self) = @_;
+
+    my $null_state = { anger=>0, anticipation=>0, disgust=>0, fear=>0, joy=>0, negative=>0, positive=>0, sadness=>0, surprise=>0, trust=>0 };
+
+    my $contents = $self->file ? read_text( $self->file ) : $self->text;
+
+    $self->sentences( get_sentences($contents) );
+
+    my @sentences = map { $_ } @{ $self->sentences };
+
+    my @scores;
+
+    my $emotion = Lingua::EN::Opinion::Emotion->new();
+
+    for my $sentence ( @sentences ) {
+        $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
+
+        my @words = split /\s+/, $sentence;
+
+        for my $word ( @words ) {
+            push @scores, exists $emotion->wordlist->{$word}
+                ? $emotion->wordlist->{$word} : $null_state;
+        }
+    }
+
+    $self->nrc_scores( \@scores );
+}
+
 1;
 __END__
 
@@ -168,5 +227,7 @@ L<Lingua::EN::Sentence>
 L<Statistics::Lite>
 
 L<https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon>
+
+L<http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm>
 
 =cut

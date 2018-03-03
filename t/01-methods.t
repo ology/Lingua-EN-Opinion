@@ -28,8 +28,8 @@ my $sentences = [
     "You might even say it's beautiful!",
 ];
 
-my $x = $obj->analyze;
-$x = $obj->sentences;
+$obj->analyze;
+my $x = $obj->sentences;
 is_deeply $x, $sentences, 'sentences';
 $x = $obj->scores;
 my $scores = [ 0, -1, -1, 1, 0, -1, 0, -2, -2, 1, 1 ];
@@ -51,7 +51,7 @@ END
 
 $obj = Lingua::EN::Opinion->new( text => $text );
 isa_ok $obj, 'Lingua::EN::Opinion';
-my $x = $obj->analyze;
+$obj->analyze;
 $x = $obj->sentences;
 is_deeply $x, $sentences, 'sentences';
 $x = $obj->scores;
@@ -61,5 +61,21 @@ is_deeply $x, $scores, 'scores';
 $x = $obj->averaged_score(2);
 $scores = [ -0.5, 0, -0.5, -1, -0.5, 1 ];
 is_deeply $x, $scores, 'averaged_score';
+
+$scores = {
+    anger => 0,
+    anticipation => 1,
+    disgust => 0,
+    fear => 0,
+    joy => 0,
+    negative => 0,
+    positive => 0,
+    sadness => 0
+    surprise => 0,
+    trust => 1,
+};
+
+$obj->nrc_sentiment();
+is_deeply $obj->nrc_scores->[6], $scores, 'nrc_scores';
 
 done_testing();
