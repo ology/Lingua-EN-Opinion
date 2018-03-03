@@ -26,6 +26,8 @@ use Lingua::EN::Sentence qw( get_sentences );
 
 A C<Lingua::EN::Opinion> measures the positive/negative sentiment of text.
 
+Please see the F<eg/> and F<t/> scripts for usage.
+
 =head1 ATTRIBUTES
 
 =head2 file
