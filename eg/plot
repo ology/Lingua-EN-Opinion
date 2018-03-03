@@ -7,7 +7,7 @@ use Lingua::EN::Opinion;
 use Math::CMA qw( central_moving_averages );
 
 my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
-my $cma        = shift || 0;  # To use central_moving_averages.
+my $cma        = shift || 0;  # To use central_moving_averages
 my $param      = shift || 1;  # distance for cma, bins for averaged_score
 my $width      = shift || 800;
 my $height     = shift || 400;
