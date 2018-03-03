@@ -58,4 +58,8 @@ $x = $obj->scores;
 my $scores = [ 0, -1, -1, 1, 0, -1, 0, -2, -2, 1, 1 ];
 is_deeply $x, $scores, 'scores';
 
+$x = $obj->averaged_score(2);
+$scores = [ -0.5, 0, -0.5, -1, -0.5, 1 ];
+is_deeply $x, $scores, 'averaged_score';
+
 done_testing();

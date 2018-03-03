@@ -2,7 +2,7 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the positive/negative sentiment of text
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Moo;
 use strictures 2;
@@ -13,6 +13,7 @@ use Lingua::EN::Opinion::Negative;
 
 use File::Slurper qw( read_text );
 use Lingua::EN::Sentence qw( get_sentences );
+use Statistics::Lite qw( mean );
 
 =head1 SYNOPSIS
 
@@ -21,6 +22,7 @@ use Lingua::EN::Sentence qw( get_sentences );
   $opinion->analyze();
   my $sentences = $opinion->sentences;
   my $scores = $opinion->scores;
+  my $averaged = $opinion->averaged_score(5);
 
 =head1 DESCRIPTION
 
@@ -48,7 +50,7 @@ A text string to analyze instead of a text file.
 =cut
 
 has text => (
-      is  => 'ro',
+    is => 'ro',
 );
 
 =head2 sentences
@@ -121,6 +123,37 @@ sub analyze {
     $self->scores( \@scores );
 }
 
+=head2 averaged_score()
+
+  $averaged = $opinion->averaged_score($bins);
+
+Compute the averaged score given a number of (integer) B<bins> (default: 10).
+
+This reduces the amount of "noise" in the original signal.  As such, it loses
+information detail.
+
+For example, if there are 400 sentences, B<bins> of 10 will result in 40 data
+points.  Each point will be the mean of each successive bin-sized set of points
+in the analyzed score.
+
+=cut
+
+sub averaged_score {
+    my ( $self, $bins ) = @_;
+
+    $bins ||= 10;
+
+    my @scores = map { $_ } @{ $self->scores };
+
+    my @averaged;
+
+    while ( my @n = splice @scores, 0, $bins ) {
+        push @averaged, mean(@n);
+    }
+
+    return \@averaged;
+}
+
 1;
 __END__
 
@@ -132,10 +165,8 @@ L<File::Slurper>
 
 L<Lingua::EN::Sentence>
 
+L<Statistics::Lite>
+
 L<https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon>
-
-=head1 TO DO
-
-Transform the scores into binned percentages.
 
 =cut

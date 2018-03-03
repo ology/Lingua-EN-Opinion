@@ -6,6 +6,7 @@ use GD::Graph::Cartesian;
 use Lingua::EN::Opinion;
 
 my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
+my $bins       = shift || 1;
 my $height     = shift || 400;
 my $width      = shift || 800;
 my $margin = 20;
@@ -26,7 +27,7 @@ my $counter = 0;
 
 my ( $last_x, $last_y );
 
-for my $score ( @{ $opinion->scores } ) {
+for my $score ( @{ $opinion->averaged_score($bins) } ) {
     $counter++;
 
     if ( defined $last_x && defined $last_y ) {

@@ -1,6 +1,9 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Add an averaged_score() method.
+
+0.02 2018-03-03 10:04:45
     - Added the ability analyze a string, instead of just a file.
 
 0.0101 2018-03-03 09:39:23
