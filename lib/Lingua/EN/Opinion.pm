@@ -2,7 +2,7 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the emotional sentiment of text
 
-our $VERSION = '0.0504';
+our $VERSION = '0.0505';
 
 use Moo;
 use strictures 2;
@@ -31,7 +31,7 @@ use Statistics::Lite qw( mean );
 
 A C<Lingua::EN::Opinion> measures the emotional sentiment of text.
 
-NOTE: This module is 3.4MB because of the GIANT sentiment text it comes with.
+NOTE: This module is over 3MB because of the GIANT sentiment text it comes with.
 
 Please see the F<eg/> and F<t/> scripts for example usage.
 
