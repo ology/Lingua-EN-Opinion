@@ -1,6 +1,9 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Improved example script.
+
+0.0505 2018-03-04 14:31:22
     - Use the superior GD::Graph::lines module in the example scripts.
 
 0.0504 2018-03-04 10:38:50
