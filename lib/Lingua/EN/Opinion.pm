@@ -29,7 +29,7 @@ use Statistics::Lite qw( mean );
 
 =head1 DESCRIPTION
 
-A C<Lingua::EN::Opinion> measures the positive/negative sentiment of text.
+A C<Lingua::EN::Opinion> measures the emotional sentiment of text.
 
 NOTE: This module is 3.4MB because of the GIANT sentiment text it comes with.
 
