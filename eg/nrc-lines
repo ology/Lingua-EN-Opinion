@@ -19,9 +19,9 @@ my @data = (
     [ 1 .. $size ],
     [ map { $_->{$emotion} } @{ $opinion->nrc_scores } ],
 );
- 
+
 my $my_graph = GD::Graph::lines->new( $width, $height );
- 
+
 $my_graph->set( 
     x_label => 'Sentence',
     y_label => ucfirst($emotion),
@@ -29,7 +29,7 @@ $my_graph->set(
     transparent => 0,
     dclrs => [qw( black )],
 );
- 
+
 my $gd = $my_graph->plot(\@data);
 
 print $gd->png;
