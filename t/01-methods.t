@@ -72,7 +72,7 @@ $scores = {
     positive => 0,
     sadness => 0,
     surprise => 0,
-    trust => 1,
+    trust => 0,
 };
 
 $obj->nrc_sentiment();

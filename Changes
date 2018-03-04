@@ -1,7 +1,10 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
-    - Add and test the nrc_sentiment() method.
+    - Adjust nrc logic to tally sentence totals (not by words).
+
+0.04 2018-03-03 17:27:30
+    - Add, test and illustrate the nrc_sentiment() method.
 
 0.03 2018-03-03 12:17:54
     - Add, test and illustrate the averaged_score() method.

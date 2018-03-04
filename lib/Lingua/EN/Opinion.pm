@@ -173,7 +173,7 @@ sub averaged_score {
 
 =head2 nrc_sentiment()
 
-Compute the NRC sentiment of the given text.
+Compute the NRC sentiment of the given text by sentences.
 
 This is given by a 0/1 list of these 10 emotional elements:
 
@@ -210,10 +210,33 @@ sub nrc_sentiment {
 
         my @words = split /\s+/, $sentence;
 
+        my $initial = {
+            anger        => 0,
+            anticipation => 0,
+            disgust      => 0,
+            fear         => 0,
+            joy          => 0,
+            negative     => 0,
+            positive     => 0,
+            sadness      => 0,
+            surprise     => 0,
+            trust        => 0,
+        };
+
+        my $score;
+
         for my $word ( @words ) {
-            push @scores, exists $emotion->wordlist->{$word}
-                ? $emotion->wordlist->{$word} : $null_state;
+            if ( exists $emotion->wordlist->{$word} ) {
+                for my $key ( keys %{ $emotion->wordlist->{$word} } ) {
+                    $score->{$key} += $emotion->wordlist->{$word}{$key};
+                }
+            }
         }
+
+        $score = $initial
+            unless $score;
+
+        push @scores, $score;
     }
 
     $self->nrc_scores( \@scores );
