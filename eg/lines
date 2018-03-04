@@ -2,8 +2,9 @@
 use strict;
 use warnings;
 
-use GD::Graph::Cartesian;
+use GD::Graph::lines;
 use Lingua::EN::Opinion;
+use List::Util qw( min max );
 use Math::CMA qw( central_moving_averages );
 
 my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
@@ -11,7 +12,6 @@ my $cma        = shift || 0;  # To use central_moving_averages
 my $param      = shift || 1;  # distance for cma, bins for averaged_score
 my $width      = shift || 800;
 my $height     = shift || 400;
-my $margin     = 20;
 
 my $opinion = Lingua::EN::Opinion->new( file => $input_file );
 
@@ -20,33 +20,23 @@ $opinion->analyze();
 my $averaged = $cma ? [ central_moving_averages( $param, $opinion->scores ) ]
                     : $opinion->averaged_score($param);
 
-my $obj = GD::Graph::Cartesian->new(
-    height  => $height,
-    width   => $width,
-    borderx => $margin,
-    bordery => $margin,
+my @data = ( 
+    [ 1 .. @$averaged ],
+    $averaged,
 );
 
-my $counter = 0;
+my $my_graph = GD::Graph::lines->new( $width, $height );
 
-my ( $last_x, $last_y );
+$my_graph->set( 
+    x_label     => 'Sentence',
+    y_label     => 'Negative/Positive',
+    title       => 'Emotion Over Time',
+    transparent => 0,
+    dclrs       => [qw( black )],
+    y_max_value => max( @$averaged ),
+    y_min_value => min( @$averaged ),
+);
 
-for my $score ( @$averaged ) {
-    $counter++;
+my $gd = $my_graph->plot(\@data);
 
-    if ( defined $last_x && defined $last_y ) {
-        $obj->addLine( $last_x, $last_y, $counter, $score )
-    }
-
-    ( $last_x, $last_y ) = ( $counter, $score );
-
-#    $obj->addPoint( $counter, $score );
-}
-
-my ( $x0, $x1, $y0, $y1 ) = ( $obj->_minmaxx, $obj->_minmaxy );
-$obj->addRectangle( $x0, $y0, $x1, $y1 );
-
-print $obj->draw;
-
-__END__
-perl eg/plot ~/Documents/lit/Sacred-Texts/KJV-Bible.txt 0 100 2000 > eg/plot.png
+print $gd->png;
