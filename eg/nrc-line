@@ -15,8 +15,6 @@ my $opinion = Lingua::EN::Opinion->new( file => $input_file );
 
 $opinion->nrc_sentiment();
 
-my $scores = $opinion->nrc_scores;
-
 my $obj = GD::Graph::Cartesian->new(
     height   => $height,
     width    => $width,
@@ -40,7 +38,7 @@ for my $score ( @{ $opinion->nrc_scores } ) {
 
     ( $last_x, $last_y ) = ( $counter, $score );
 
-    $obj->addPoint( $counter, $score );
+#    $obj->addPoint( $counter, $score );
 }
 
 my ( $x0, $x1, $y0, $y1 ) = ( $obj->_minmaxx, $obj->_minmaxy );
