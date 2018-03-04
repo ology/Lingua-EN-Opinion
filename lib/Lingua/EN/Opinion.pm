@@ -191,7 +191,7 @@ This is given by a 0/1 list of these 10 emotional elements:
   surprise
   trust
 
-This method sets the B<nrc_scores> attribute.
+This method sets the B<nrc_scores> and B<sentences> attributes.
 
 =cut
 
