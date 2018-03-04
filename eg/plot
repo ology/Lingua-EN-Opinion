@@ -41,7 +41,7 @@ for my $score ( @$averaged ) {
 
     ( $last_x, $last_y ) = ( $counter, $score );
 
-    $obj->addPoint( $counter, $score );
+#    $obj->addPoint( $counter, $score );
 }
 
 my ( $x0, $x1, $y0, $y1 ) = ( $obj->_minmaxx, $obj->_minmaxy );
