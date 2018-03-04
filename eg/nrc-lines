@@ -18,7 +18,6 @@ $opinion->nrc_sentiment();
 my $size = @{ $opinion->nrc_scores };
 
 my @data = ( [ 1 .. $size ] );
-
 for my $value ( @emotions ) {
     push @data, [ map { $_->{$value} } @{ $opinion->nrc_scores } ];
 }
