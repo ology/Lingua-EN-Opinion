@@ -21,13 +21,10 @@ my $averaged = $cma ? [ central_moving_averages( $param, $opinion->scores ) ]
                     : $opinion->averaged_score($param);
 
 my $obj = GD::Graph::Cartesian->new(
-    height   => $height,
-    width    => $width,
-    borderx  => $margin,
-    bordery  => $margin,
-#    ticksx   => 10,
-#    ticksy   => 10,
-    iconsize => 4,
+    height  => $height,
+    width   => $width,
+    borderx => $margin,
+    bordery => $margin,
 );
 
 my $counter = 0;
