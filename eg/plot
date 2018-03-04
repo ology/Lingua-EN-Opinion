@@ -25,6 +25,8 @@ my $obj = GD::Graph::Cartesian->new(
     width    => $width,
     borderx  => $margin,
     bordery  => $margin,
+#    ticksx   => 10,
+#    ticksy   => 10,
     iconsize => 4,
 );
 
