@@ -26,8 +26,8 @@ my $my_graph = GD::Graph::lines->new( $width, $height );
 
 $my_graph->set( 
     x_label     => 'Sentence',
-    y_label     => $emotion,
-    title       => $emotion . ' Over Time',
+    y_label     => 'Emotion',
+    title       => ucfirst($emotion) . ' Over Time',
     transparent => 0,
     dclrs       => [qw( blue red green orange brown purple black gray )],
 );
