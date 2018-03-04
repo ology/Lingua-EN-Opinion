@@ -1,6 +1,6 @@
 package Lingua::EN::Opinion;
 
-# ABSTRACT: Measure the positive/negative sentiment of text
+# ABSTRACT: Measure the emotional sentiment of text
 
 our $VERSION = '0.0502';
 
@@ -106,7 +106,7 @@ Create a new C<Lingua::EN::Opinion> object.
 
   $opinion->analyze();
 
-Measure the positive/negative sentiment of text.  This method sets the B<scores>
+Measure the emotional sentiment of text.  This method sets the B<scores>
 and B<sentences> attributes.
 
 =cut
@@ -191,6 +191,8 @@ This is given by a 0/1 list of these 10 emotional elements:
   surprise
   trust
 
+This method sets the B<nrc_scores> attribute.
+
 =cut
 
 sub nrc_sentiment {
@@ -261,5 +263,7 @@ L<Statistics::Lite>
 L<https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon>
 
 L<http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm>
+
+L<http://techn.ology.net/book-of-revelation-sentiment-analysis/>
 
 =cut
