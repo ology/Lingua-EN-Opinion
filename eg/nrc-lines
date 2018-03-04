@@ -22,9 +22,9 @@ for my $value ( @emotions ) {
     push @data, [ map { $_->{$value} } @{ $opinion->nrc_scores } ];
 }
 
-my $my_graph = GD::Graph::lines->new( $width, $height );
+my $graph = GD::Graph::lines->new( $width, $height );
 
-$my_graph->set( 
+$graph->set( 
     x_label     => 'Sentence',
     y_label     => 'Emotion',
     title       => ucfirst($emotion) . ' Over Time',
@@ -32,6 +32,6 @@ $my_graph->set(
     dclrs       => [qw( blue red green orange brown purple black gray )],
 );
 
-my $gd = $my_graph->plot(\@data);
+my $gd = $graph->plot(\@data);
 
 print $gd->png;
