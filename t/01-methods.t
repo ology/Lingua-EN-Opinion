@@ -70,7 +70,7 @@ $scores = {
     joy => 0,
     negative => 0,
     positive => 0,
-    sadness => 0
+    sadness => 0,
     surprise => 0,
     trust => 1,
 };
