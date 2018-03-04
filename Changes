@@ -1,6 +1,8 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+
+0.0504 2018-03-04 10:38:50
     - Fix nrc_sentiment() logic.
 
 0.0503 2018-03-04 10:11:59
