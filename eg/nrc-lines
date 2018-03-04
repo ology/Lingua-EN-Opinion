@@ -6,28 +6,31 @@ use GD::Graph::lines;
 use Lingua::EN::Opinion;
 
 my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
-my $emotion    = shift || 'anger';  # anger anticipation disgust fear joy negative positive sadness surprise trust
+my $emotion    = shift || 'joy,sadness';  # anger anticipation disgust fear joy negative positive sadness surprise trust
 my $width      = shift || 800;
 my $height     = shift || 400;
+
+my @emotions = split /,/, $emotion;
 
 my $opinion = Lingua::EN::Opinion->new( file => $input_file );
 $opinion->nrc_sentiment();
 
 my $size = @{ $opinion->nrc_scores };
 
-my @data = ( 
-    [ 1 .. $size ],
-    [ map { $_->{$emotion} } @{ $opinion->nrc_scores } ],
-);
+my @data = ( [ 1 .. $size ] );
+
+for my $value ( @emotions ) {
+    push @data, [ map { $_->{$value} } @{ $opinion->nrc_scores } ];
+}
 
 my $my_graph = GD::Graph::lines->new( $width, $height );
 
 $my_graph->set( 
-    x_label => 'Sentence',
-    y_label => ucfirst($emotion),
-    title => ucfirst($emotion) . ' Over Time',
+    x_label     => 'Sentence',
+    y_label     => $emotion,
+    title       => $emotion . ' Over Time',
     transparent => 0,
-    dclrs => [qw( black )],
+    dclrs       => [qw( blue red green orange brown purple black gray )],
 );
 
 my $gd = $my_graph->plot(\@data);
