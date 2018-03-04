@@ -21,7 +21,11 @@ use Statistics::Lite qw( mean );
   use Lingua::EN::Opinion;
   my $opinion = Lingua::EN::Opinion->new( file => '/some/file.txt' );
   $opinion->analyze();
-  my $averaged = $opinion->averaged_score(5);
+  my $score = $opinion->averaged_score(5);
+  # OR
+  $opinion = Lingua::EN::Opinion->new( text => 'Mary had a little lamb...' );
+  $opinion->nrc_sentiment();
+  # And now do something cool with $opinion->nrc_scores...
 
 =head1 DESCRIPTION
 
