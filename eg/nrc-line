@@ -1,0 +1,49 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+use GD::Graph::Cartesian;
+use Lingua::EN::Opinion;
+
+my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
+my $emotion    = shift || 'anger';  # anger, anticipation, disgust, fear, joy, negative, positive, sadness, surprise, trust
+my $width      = shift || 800;
+my $height     = shift || 400;
+my $margin     = 20;
+
+my $opinion = Lingua::EN::Opinion->new( file => $input_file );
+
+$opinion->nrc_sentiment();
+
+my $scores = $opinion->nrc_scores;
+
+my $obj = GD::Graph::Cartesian->new(
+    height   => $height,
+    width    => $width,
+    borderx  => $margin,
+    bordery  => $margin,
+    iconsize => 4,
+);
+
+my $counter = 0;
+
+my ( $last_x, $last_y );
+
+for my $score ( @{ $opinion->nrc_scores } ) {
+    $score = $score->{$emotion};
+
+    $counter++;
+
+    if ( defined $last_x && defined $last_y ) {
+        $obj->addLine( $last_x, $last_y, $counter, $score )
+    }
+
+    ( $last_x, $last_y ) = ( $counter, $score );
+
+    $obj->addPoint( $counter, $score );
+}
+
+my ( $x0, $x1, $y0, $y1 ) = ( $obj->_minmaxx, $obj->_minmaxy );
+$obj->addRectangle( $x0, $y0, $x1, $y1 );
+
+print $obj->draw;
