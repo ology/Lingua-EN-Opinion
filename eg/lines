@@ -25,9 +25,9 @@ my @data = (
     $averaged,
 );
 
-my $my_graph = GD::Graph::lines->new( $width, $height );
+my $graph = GD::Graph::lines->new( $width, $height );
 
-$my_graph->set( 
+$graph->set( 
     x_label     => 'Sentence',
     y_label     => 'Negative/Positive',
     title       => 'Emotion Over Time',
@@ -37,6 +37,6 @@ $my_graph->set(
     y_min_value => min( @$averaged ),
 );
 
-my $gd = $my_graph->plot(\@data);
+my $gd = $graph->plot(\@data);
 
 print $gd->png;
