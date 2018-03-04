@@ -1,6 +1,8 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+
+0.05 2018-03-03 19:22:54
     - Adjust nrc logic to tally sentence totals (not by words).
 
 0.04 2018-03-03 17:27:30
