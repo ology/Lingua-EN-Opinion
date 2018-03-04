@@ -47,3 +47,6 @@ my ( $x0, $x1, $y0, $y1 ) = ( $obj->_minmaxx, $obj->_minmaxy );
 $obj->addRectangle( $x0, $y0, $x1, $y1 );
 
 print $obj->draw;
+
+__END__
+perl eg/plot ~/Documents/lit/Sacred-Texts/KJV-Bible.txt 0 100 2000 > eg/plot.png
