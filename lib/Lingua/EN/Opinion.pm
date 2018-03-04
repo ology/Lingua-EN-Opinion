@@ -35,6 +35,9 @@ NOTE: This module is 3.4MB because of the GIANT sentiment text it comes with.
 
 Please see the F<eg/> and F<t/> scripts for example usage.
 
+The write-up illustrating usage and results can be found at
+L<http://techn.ology.net/book-of-revelation-sentiment-analysis/>
+
 =head1 ATTRIBUTES
 
 =head2 file
