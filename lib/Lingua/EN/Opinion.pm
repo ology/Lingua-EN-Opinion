@@ -215,19 +215,6 @@ sub nrc_sentiment {
 
         my @words = split /\s+/, $sentence;
 
-        my $initial = {
-            anger        => 0,
-            anticipation => 0,
-            disgust      => 0,
-            fear         => 0,
-            joy          => 0,
-            negative     => 0,
-            positive     => 0,
-            sadness      => 0,
-            surprise     => 0,
-            trust        => 0,
-        };
-
         my $score;
 
         for my $word ( @words ) {
@@ -238,7 +225,7 @@ sub nrc_sentiment {
             }
         }
 
-        $score = $initial
+        $score = $null_state
             unless $score;
 
         push @scores, $score;
