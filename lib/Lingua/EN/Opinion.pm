@@ -31,11 +31,12 @@ use Statistics::Lite qw( mean );
 
 A C<Lingua::EN::Opinion> measures the emotional sentiment of text.
 
-NOTE: This module is over 3MB because of the GIANT sentiment text it comes with.
+NOTE: This module is over 3MB uncompressed because of the GIANT sentiment text
+it comes with.
 
 Please see the F<eg/> and F<t/> scripts for example usage.
 
-The write-up illustrating usage and results can be found at
+The write-up illustrating results can be found at
 L<http://techn.ology.net/book-of-revelation-sentiment-analysis/>
 
 =head1 ATTRIBUTES
@@ -106,8 +107,8 @@ Create a new C<Lingua::EN::Opinion> object.
 
   $opinion->analyze();
 
-Measure the emotional sentiment of text.  This method sets the B<scores>
-and B<sentences> attributes.
+Measure the positive/negative emotional sentiment of text.  This method sets the
+B<scores> and B<sentences> attributes.
 
 =cut
 
