@@ -71,6 +71,7 @@ Computed result.
 has sentences => (
     is       => 'rw',
     init_arg => undef,
+    default  => sub { [] },
 );
 
 =head2 scores
@@ -82,6 +83,7 @@ Computed result.
 has scores => (
     is       => 'rw',
     init_arg => undef,
+    default  => sub { [] },
 );
 
 =head2 nrc_scores
@@ -93,6 +95,7 @@ Computed result.
 has nrc_scores => (
     is       => 'rw',
     init_arg => undef,
+    default  => sub { [] },
 );
 
 =head1 METHODS
@@ -117,7 +120,8 @@ sub analyze {
 
     my $contents = $self->file ? read_text( $self->file ) : $self->text;
 
-    $self->sentences( get_sentences($contents) );
+    $self->sentences( get_sentences($contents) )
+        unless @{ $self->sentences };
 
     my @sentences = map { $_ } @{ $self->sentences };
 
@@ -203,7 +207,8 @@ sub nrc_sentiment {
 
     my $contents = $self->file ? read_text( $self->file ) : $self->text;
 
-    $self->sentences( get_sentences($contents) );
+    $self->sentences( get_sentences($contents) )
+        unless @{ $self->sentences };
 
     my @sentences = map { $_ } @{ $self->sentences };
 
