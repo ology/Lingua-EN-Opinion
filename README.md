@@ -1,2 +1,2 @@
-# Lingua-EN-Opinion
-Measure the positive/negative sentiment of text
+# Lingua::EN::Opinion
+Measure the emotional sentiment of text
