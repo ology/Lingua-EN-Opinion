@@ -5,7 +5,7 @@ use warnings;
 use Lingua::EN::Opinion;
 
 my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
-my $emotion    = shift || 'anger';  # anger, anticipation, disgust, fear, joy, negative, positive, sadness, surprise, trust
+my $emotion    = shift || 'anger';  # anger anticipation disgust fear joy negative positive sadness surprise trust
 
 my $opinion = Lingua::EN::Opinion->new( file => $input_file );
 
