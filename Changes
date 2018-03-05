@@ -2,6 +2,7 @@ Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
     - Improved example script.
+    - Don't recompute the sentences if they exist.
 
 0.0505 2018-03-04 14:31:22
     - Use the superior GD::Graph::lines module in the example scripts.
