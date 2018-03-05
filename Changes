@@ -1,7 +1,7 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
-    - Improved example script.
+    - Improve example scripts.
     - Don't recompute the sentences if they exist.
 
 0.0505 2018-03-04 14:31:22
@@ -29,10 +29,10 @@ Revision history for Lingua-EN-Opinion
     - Add, test and illustrate the averaged_score() method.
 
 0.02 2018-03-03 10:04:45
-    - Added the ability analyze a string, instead of just a file.
+    - Add the ability analyze a string, instead of just a file.
 
 0.0101 2018-03-03 09:39:23
-    - Corrected dist.ini links.
+    - Correct dist.ini links.
 
 0.01 2018-03-02 17:42:21
-    - Minted by Dist::Zilla.
+    - Mint by Dist::Zilla.
