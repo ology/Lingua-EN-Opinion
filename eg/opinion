@@ -7,7 +7,6 @@ use Lingua::EN::Opinion;
 my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
 
 my $opinion = Lingua::EN::Opinion->new( file => $input_file );
-
 $opinion->analyze();
 
 my %score;
