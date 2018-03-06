@@ -34,6 +34,7 @@ $graph->set(
     title       => "Usage of $term Over Time",
     transparent => 0,
     dclrs       => [qw( gray red )],
+    line_types  => [ 2, 1 ],
     y_max_value => max( @{ $opinion->scores } ),
     y_min_value => min( @{ $opinion->scores } ),
 );
