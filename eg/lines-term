@@ -17,9 +17,6 @@ $opinion->analyze();
 my %scores;
 @scores{ @{ $opinion->sentences } } = @{ $opinion->scores };
 
-my $max = max( @{ $opinion->scores } );
-my $min = min( @{ $opinion->scores } );
-
 my $locations = [ map { /$term/ ? $scores{$_} : 0 } @{ $opinion->sentences } ];
 
 my $size = @{ $opinion->scores };
@@ -37,8 +34,8 @@ $graph->set(
     title       => "Usage of $term Over Time",
     transparent => 0,
     dclrs       => [qw( gray red )],
-    y_max_value => $max,
-    y_min_value => $min,
+    y_max_value => max( @{ $opinion->scores } ),
+    y_min_value => min( @{ $opinion->scores } ),
 );
 
 my $gd = $graph->plot(\@data);
