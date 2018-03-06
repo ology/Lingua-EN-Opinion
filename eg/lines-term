@@ -29,14 +29,17 @@ my @data = (
 
 my $graph = GD::Graph::lines->new( $width, $height );
 $graph->set( 
-    x_label     => 'Sentence',
-    y_label     => 'Negative/Positive',
-    title       => "Usage of $term Over Time",
-    transparent => 0,
-    dclrs       => [qw( gray red )],
-    line_types  => [ 2, 1 ],
-    y_max_value => max( @{ $opinion->scores } ),
-    y_min_value => min( @{ $opinion->scores } ),
+    x_label       => 'Sentence',
+    y_label       => 'Negative/Positive',
+    title         => "Usage of $term Over Time",
+    transparent   => 0,
+    dclrs         => [qw( gray red )],
+    line_types    => [ 2, 1 ],
+    y_max_value   => max( @{ $opinion->scores } ),
+    y_min_value   => min( @{ $opinion->scores } ),
+    x_min_value   => 0,
+    x_max_value   => $size,
+    x_tick_number => $size / 10,
 );
 
 my $gd = $graph->plot(\@data);
