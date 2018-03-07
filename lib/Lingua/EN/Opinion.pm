@@ -2,7 +2,7 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the emotional sentiment of text
 
-our $VERSION = '0.06';
+our $VERSION = '0.0601';
 
 use Moo;
 use strictures 2;
