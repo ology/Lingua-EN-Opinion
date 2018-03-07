@@ -22,6 +22,7 @@ my $averaged = $cma ? [ central_moving_averages( $param, $opinion->scores ) ]
 
 my @data = ( 
     [ 1 .. @$averaged ],
+    [ (0) x @$averaged ],
     $averaged,
 );
 
@@ -32,7 +33,7 @@ $graph->set(
     y_label     => 'Negative/Positive',
     title       => 'Emotion Over Time',
     transparent => 0,
-    dclrs       => [qw( black )],
+    dclrs       => [qw( green black )],
     y_max_value => max( @$averaged ),
     y_min_value => min( @$averaged ),
 );
