@@ -14,7 +14,6 @@ my $width      = shift || 800;
 my $height     = shift || 400;
 
 my $opinion = Lingua::EN::Opinion->new( file => $input_file );
-
 $opinion->analyze();
 
 my $averaged = $cma ? [ central_moving_averages( $param, $opinion->scores ) ]
