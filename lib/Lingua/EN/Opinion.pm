@@ -31,8 +31,7 @@ use Statistics::Lite qw( mean );
 
 A C<Lingua::EN::Opinion> measures the emotional sentiment of text.
 
-NOTE: This module is over 3MB uncompressed because of the GIANT sentiment text
-it comes with.
+* This module is large because of the GIANT sentiment text it comes with.
 
 Please see the F<eg/> and F<t/> scripts for example usage.
 
