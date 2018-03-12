@@ -1,6 +1,9 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Improve example scripts.
+
+0.0601 2018-03-06 19:14:31
     - Fix the example scripts up.
     - Add lines-term to the example scripts.
     - Up the required version of Moo!
