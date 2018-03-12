@@ -4,6 +4,7 @@ use warnings;
 
 use Lingua::EN::Opinion;
 use Statistics::Lite qw( mean );
+use List::Util qw( sum0 );
 
 my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
 
@@ -20,3 +21,4 @@ print "Most negative sentence:\n",
     [ map {"$score{$_} => $_"} sort { $score{$a} <=> $score{$b} } @{ $opinion->sentences } ]->[0],
     "\n";
 print 'Average sentence score: ', mean( @{ $opinion->scores } ), "\n";
+print 'Total sentence score: ', sum0( @{ $opinion->scores } ), "\n";
