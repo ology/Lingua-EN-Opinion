@@ -239,6 +239,48 @@ sub nrc_sentiment {
     $self->nrc_scores( \@scores );
 }
 
+=head2 get_word()
+
+  $sentiment = $opinion->get_word($word);
+
+Get the positive/negative sentiment for a given word.  Return a HashRef of
+positive/negative keys.  If the word does not exist, return C<undef>.
+
+=cut
+
+sub get_word {
+    my ( $self, $word ) = @_;
+
+    my $positive = Lingua::EN::Opinion::Positive->new();
+    my $negative = Lingua::EN::Opinion::Negative->new();
+
+    return exists $positive->wordlist->{$word} || exists $negative->wordlist->{$word}
+        ? {
+            positive => exists $positive->wordlist->{$word} ? 1 : 0,
+            negative => exists $negative->wordlist->{$word} ? 1 : 0,
+        }
+        : undef;
+}
+
+=head2 nrc_get_word()
+
+  $sentiment = $opinion->nrc_get_word($word);
+
+Get the NRC emotional sentiment for a given word.  Return a HashRef of the NRC
+emotions.  If the word does not exist, return C<undef>.
+
+=cut
+
+sub nrc_get_word {
+    my ( $self, $word ) = @_;
+
+    my $emotion = Lingua::EN::Opinion::Emotion->new();
+
+    return exists $emotion->wordlist->{$word}
+        ? $emotion->wordlist->{$word}
+        : undef;
+}
+
 1;
 __END__
 
