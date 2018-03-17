@@ -2,6 +2,7 @@ Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
     - Improve example scripts.
+    - Add the get_word() & nrc_get_word() methods.
 
 0.0601 2018-03-06 19:14:31
     - Fix the example scripts up.
