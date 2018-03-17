@@ -135,9 +135,7 @@ sub analyze {
     my $negative = Lingua::EN::Opinion::Negative->new();
 
     for my $sentence ( @sentences ) {
-        $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
-
-        my @words = split /\s+/, $sentence;
+        my @words = _tokenize($sentence);
 
         my $score = 0;
 
@@ -224,9 +222,7 @@ sub nrc_sentiment {
     my $emotion = Lingua::EN::Opinion::Emotion->new();
 
     for my $sentence ( @sentences ) {
-        $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
-
-        my @words = split /\s+/, $sentence;
+        my @words = _tokenize($sentence);
 
         my $score;
 
@@ -300,8 +296,7 @@ Return the positive/negative values for the words of the given sentence.
 sub get_sentence {
     my ( $self, $sentence ) = @_;
 
-    $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
-    my @words = split /\s+/, $sentence;
+    my @words = _tokenize($sentence);
 
     my %score;
     $score{$_} = $self->get_word($_) for @words;
@@ -320,13 +315,19 @@ Return the NRC emotion values for each word of the given sentence.
 sub nrc_get_sentence {
     my ( $self, $sentence ) = @_;
 
-    $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
-    my @words = split /\s+/, $sentence;
+    my @words = _tokenize($sentence);
 
     my %score;
     $score{$_} = $self->nrc_get_word($_) for @words;
 
     return \%score;
+}
+
+sub _tokenize {
+    my ($sentence) = @_;
+    $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
+    my @words = split /\s+/, $sentence;
+    return @words;
 }
 
 1;
