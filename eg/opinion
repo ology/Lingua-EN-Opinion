@@ -18,16 +18,16 @@ my $min = min( @{ $opinion->scores } );
 my $max = max( @{ $opinion->scores } );
 
 print "Most positive sentences:\n";
-    for my $positive ( map { [ $score{$_} => $_ ] } @{ $opinion->sentences } ) {
-        next unless $positive->[0] == $max;
-        print "\t$positive->[1]\n";
-    }
+for my $positive ( map { [ $score{$_} => $_ ] } @{ $opinion->sentences } ) {
+    next unless $positive->[0] == $max;
+    print "\t$positive->[1]\n";
+}
 print "\n";
 print "Most negative sentences:\n";
-    for my $negative ( map { [ $score{$_} => $_ ] } @{ $opinion->sentences } ) {
-        next unless $negative->[0] == $min;
-        print "\t$negative->[1]\n";
-    }
+for my $negative ( map { [ $score{$_} => $_ ] } @{ $opinion->sentences } ) {
+    next unless $negative->[0] == $min;
+    print "\t$negative->[1]\n";
+}
 print "\n";
 print 'Total sentence score: ', sum0( @{ $opinion->scores } ), "\n";
 print 'Total number of sentences: ', scalar( @{ $opinion->sentences } ), "\n";
