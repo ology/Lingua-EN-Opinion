@@ -23,11 +23,13 @@ use Statistics::Lite qw( mean );
   $opinion->analyze();
   my $score = $opinion->averaged_score(5);
   my $sentiment = $opinion->get_word('foo');
+  $sentiment = $opinion->get_sentence('Mary had a little lamb.');
   # OR
   $opinion = Lingua::EN::Opinion->new( text => 'Mary had a little lamb...' );
   $opinion->nrc_sentiment();
   # And now do something cool with $opinion->nrc_scores...
   $sentiment = $opinion->nrc_get_word('foo');
+  $sentiment = $opinion->nrc_get_sentence('Mary had a little lamb.');
 
 =head1 DESCRIPTION
 
