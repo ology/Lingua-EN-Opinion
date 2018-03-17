@@ -1,8 +1,9 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
-    - Improve documentation slightly.
+    - Improve documentation slightly again.
     - Add score-sentence.psgi to the example scripts.
+    - Modularize duplicated code.
 
 0.08 2018-03-17 13:55:28
     - Add the get_sentence() and nrc_get_sentence() methods.
