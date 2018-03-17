@@ -119,10 +119,11 @@ B<scores> and B<sentences> attributes.
 sub analyze {
     my ($self) = @_;
 
-    my $contents = $self->file ? read_text( $self->file ) : $self->text;
+    unless ( @{ $self->sentences } ) {
+        my $contents = $self->file ? read_text( $self->file ) : $self->text;
 
-    $self->sentences( get_sentences($contents) )
-        unless @{ $self->sentences };
+        $self->sentences( get_sentences($contents) );
+    }
 
     my @sentences = map { $_ } @{ $self->sentences };
 
@@ -208,10 +209,11 @@ sub nrc_sentiment {
 
     my $null_state = { anger=>0, anticipation=>0, disgust=>0, fear=>0, joy=>0, negative=>0, positive=>0, sadness=>0, surprise=>0, trust=>0 };
 
-    my $contents = $self->file ? read_text( $self->file ) : $self->text;
+    unless ( @{ $self->sentences } ) {
+        my $contents = $self->file ? read_text( $self->file ) : $self->text;
 
-    $self->sentences( get_sentences($contents) )
-        unless @{ $self->sentences };
+        $self->sentences( get_sentences($contents) );
+    }
 
     my @sentences = map { $_ } @{ $self->sentences };
 
