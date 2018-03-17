@@ -24,7 +24,7 @@ my $size = @{ $opinion->scores };
 my @data = ( 
     [ 1 .. $size ],     # The x axis labels
     $opinion->scores,   # The sentiment data
-    $locations,         # Line showing instance of term
+    $locations,         # Line showing instances of term
 );
 
 my $graph = GD::Graph::lines->new( $width, $height );
