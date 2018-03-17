@@ -22,12 +22,12 @@ use Statistics::Lite qw( mean );
   my $opinion = Lingua::EN::Opinion->new( file => '/some/file.txt' );
   $opinion->analyze();
   my $score = $opinion->averaged_score(5);
-  my $word = $opinion->get_word('foo');
+  my $sentiment = $opinion->get_word('foo');
   # OR
   $opinion = Lingua::EN::Opinion->new( text => 'Mary had a little lamb...' );
   $opinion->nrc_sentiment();
   # And now do something cool with $opinion->nrc_scores...
-  $word = $opinion->nrc_get_word('foo');
+  $sentiment = $opinion->nrc_get_word('foo');
 
 =head1 DESCRIPTION
 
