@@ -180,6 +180,8 @@ sub averaged_score {
 
 =head2 nrc_sentiment()
 
+  $opinion->nrc_sentiment();
+
 Compute the NRC sentiment of the given text by sentences.
 
 This is given by a 0/1 list of these 10 emotional elements:
