@@ -2,6 +2,7 @@ Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
     - Improve documentation slightly.
+    - Do not slurp the given file if sentences already exist.
 
 0.07 2018-03-16 23:24:14
     - Improve example scripts.
