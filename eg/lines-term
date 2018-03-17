@@ -44,7 +44,4 @@ $graph->set(
 
 my $gd = $graph->plot(\@data);
 
-#my $black = $gd->colorAllocate(0,0,0);
-#GD::Image::line( $gd, 0,0, 100,5, $black );
-
 print $gd->png;
