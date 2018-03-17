@@ -29,6 +29,6 @@ print "Most negative sentences:\n";
         print "\t$negative->[1]\n";
     }
 print "\n";
-print 'Average sentence score: ', mean( @{ $opinion->scores } ), "\n";
-print "\n";
 print 'Total sentence score: ', sum0( @{ $opinion->scores } ), "\n";
+print 'Total number of sentences: ', scalar( @{ $opinion->sentences } ), "\n";
+print 'Average sentence score: ', mean( @{ $opinion->scores } ), "\n";
