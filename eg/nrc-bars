@@ -23,8 +23,6 @@ for my $score ( @{ $opinion->nrc_scores } ) {
     }
 }
 
-my $max = max( values %index );
-
 my @data = (
     [ sort keys %index ],
     [ map { $index{$_} } sort keys %index ],
@@ -36,7 +34,7 @@ $graph->set(
     title       => 'NRC Sentiment',
     x_label     => 'Emotions',
     y_label     => 'Sentences',
-    y_max_value => $max,
+    y_max_value => max( values %index ),
 ) or die "Can't set graph: ", $graph->error;
 
 my $gd = $graph->plot(\@data) or die $graph->error;
