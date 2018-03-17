@@ -2,7 +2,7 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the emotional sentiment of text
 
-our $VERSION = '0.0701';
+our $VERSION = '0.08';
 
 use Moo;
 use strictures 2;
@@ -285,6 +285,46 @@ sub nrc_get_word {
     return exists $emotion->wordlist->{$word}
         ? $emotion->wordlist->{$word}
         : undef;
+}
+
+=head2 get_sentence()
+
+  $values = $opinion->get_sentence($sentence);
+
+Return the positive/negative values for the words of the given sentence.
+
+=cut
+
+sub get_sentence {
+    my ( $self, $sentence ) = @_;
+
+    $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
+    my @words = split /\s+/, $sentence;
+
+    my %score;
+    $score{$_} = $self->get_word($_) for @words;
+
+    return \%score;
+}
+
+=head2 nrc_get_sentence()
+
+  $values = $opinion->nrc_get_sentence($sentence);
+
+Return the NRC emotion values for each word of the given sentence.
+
+=cut
+
+sub nrc_get_sentence {
+    my ( $self, $sentence ) = @_;
+
+    $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
+    my @words = split /\s+/, $sentence;
+
+    my %score;
+    $score{$_} = $self->nrc_get_word($_) for @words;
+
+    return \%score;
 }
 
 1;

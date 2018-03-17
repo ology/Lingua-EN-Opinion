@@ -1,6 +1,9 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Add the get_sentence() and nrc_get_sentence() methods.
+
+0.0701 2018-03-17 09:37:29
     - Improve documentation slightly.
     - Do not slurp the given file if sentences already exist.
 
