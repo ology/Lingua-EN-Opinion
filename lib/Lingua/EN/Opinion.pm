@@ -229,7 +229,7 @@ sub averaged_score {
 
   $opinion->nrc_sentiment();
 
-Compute the NRC sentiment of the given text by sentences.
+Compute the NRC sentiment of the given text.
 
 This is given by a 0/1 list of these 10 emotional elements:
 
