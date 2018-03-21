@@ -2,7 +2,7 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the emotional sentiment of text
 
-our $VERSION = '0.1101';
+our $VERSION = '0.1102';
 
 use Moo;
 use strictures 2;
@@ -21,7 +21,7 @@ use Try::Tiny;
 =head1 SYNOPSIS
 
   use Lingua::EN::Opinion;
-  my $opinion = Lingua::EN::Opinion->new( file => '/some/file.txt' );
+  my $opinion = Lingua::EN::Opinion->new( file => '/some/file.txt', stem => 1 );
   $opinion->analyze();
   my $score = $opinion->averaged_score(5);
   my $sentiment = $opinion->get_word('foo');
@@ -35,7 +35,7 @@ use Try::Tiny;
 
 =head1 DESCRIPTION
 
-A C<Lingua::EN::Opinion> measures the emotional sentiment of text.
+A C<Lingua::EN::Opinion> object measures the emotional sentiment of text.
 
 Please see the F<eg/> and F<t/> scripts for example usage.
 
@@ -82,6 +82,8 @@ Require the L<WordNet::QueryData> and L<WordNet::stem> modules to stem each word
 of the provided file or text.
 
 * These modules must be installed and working to use this feature.
+
+This is a computed result.  Providing this in the constructor will be ignored.
 
 =cut
 
@@ -408,6 +410,8 @@ L<File::Slurper>
 L<Lingua::EN::Sentence>
 
 L<Statistics::Lite>
+
+L<Try::Tiny>
 
 L<https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon>
 
