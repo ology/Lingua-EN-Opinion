@@ -1,6 +1,8 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+
+0.09 2018-03-20 23:03:39
     - Add optional word stemming support.
 
 0.0801 2018-03-17 15:59:18
