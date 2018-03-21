@@ -96,7 +96,7 @@ has stemmer => (
 
 sub _build_stemmer {
     try {
-        require WordNet::QueryDataX;
+        require WordNet::QueryData;
         require WordNet::stem;
         my $wn      = WordNet::QueryData->new();
         my $stemmer = WordNet::stem->new($wn);
