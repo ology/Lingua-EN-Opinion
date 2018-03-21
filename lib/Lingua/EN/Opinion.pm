@@ -80,7 +80,7 @@ has stem => (
 
 =head2 stemmer
 
-Require the L<WordNet::stem> and L<WordNet::QueryData> modules to stem each word
+Require the L<WordNet::QueryData> and L<WordNet::stem> modules to stem each word
 of the provided file or text.
 
 * These modules must be installed and working to use this feature.
