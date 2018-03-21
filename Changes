@@ -1,6 +1,10 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Improve documentation.
+    - Break out POD from the Emotion module.
+
+0.1101 2018-03-21 14:07:23
     - Remove the duplicate stemming code from the *get_sentence() methods.
 
 0.11 2018-03-21 13:26:58
