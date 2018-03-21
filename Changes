@@ -1,6 +1,9 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Re-add stemming support.
+
+0.10 2018-03-20 23:23:10
     - Sadly, we get to rollback stemming support. :(
 
 0.09 2018-03-20 23:03:39

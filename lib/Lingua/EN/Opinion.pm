@@ -2,7 +2,7 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the emotional sentiment of text
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 use Moo;
 use strictures 2;
@@ -12,9 +12,11 @@ use Lingua::EN::Opinion::Positive;
 use Lingua::EN::Opinion::Negative;
 use Lingua::EN::Opinion::Emotion;
 
+use Carp;
 use File::Slurper qw( read_text );
 use Lingua::EN::Sentence qw( get_sentences );
 use Statistics::Lite qw( mean );
+use Try::Tiny;
 
 =head1 SYNOPSIS
 
@@ -62,6 +64,46 @@ A text string to analyze instead of a text file.
 has text => (
     is => 'ro',
 );
+
+=head2 stem
+
+Boolean flag to indicate that word stemming should take place.
+
+=cut
+
+has stem => (
+    is      => 'ro',
+    default => sub { 0 },
+);
+
+=head2 stemmer
+
+Require the L<WordNet::QueryData> and L<WordNet::stem> modules to stem each word
+of the provided file or text.
+
+* These modules must be installed and working to use this feature.
+
+=cut
+
+has stemmer => (
+    is       => 'ro',
+    lazy     => 1,
+    builder  => 1,
+    init_arg => undef,
+);
+
+sub _build_stemmer {
+    try {
+        require WordNet::QueryData;
+        require WordNet::stem;
+        my $wn      = WordNet::QueryData->new();
+        my $stemmer = WordNet::stem->new($wn);
+        return $stemmer;
+    }
+    catch {
+        croak 'The WordNet::QueryData and WordNet::stem modules must be installed and working to enable stemming support';
+    };
+}
 
 =head2 sentences
 
@@ -138,6 +180,8 @@ sub analyze {
         my $score = 0;
 
         for my $word ( @words ) {
+            $word = $self->_stemword($word);
+
             $score += exists $positive->wordlist->{$word} ? 1
                     : exists $negative->wordlist->{$word} ? -1 : 0;
         }
@@ -225,6 +269,8 @@ sub nrc_sentiment {
         my $score;
 
         for my $word ( @words ) {
+            $word = $self->_stemword($word);
+
             if ( exists $emotion->wordlist->{$word} ) {
                 for my $key ( keys %{ $emotion->wordlist->{$word} } ) {
                     $score->{$key} += $emotion->wordlist->{$word}{$key};
@@ -253,6 +299,8 @@ positive/negative keys.  If the word does not exist, return C<undef>.
 sub get_word {
     my ( $self, $word ) = @_;
 
+    $word = $self->_stemword($word);
+
     my $positive = Lingua::EN::Opinion::Positive->new();
     my $negative = Lingua::EN::Opinion::Negative->new();
 
@@ -275,6 +323,8 @@ emotions.  If the word does not exist, return C<undef>.
 
 sub nrc_get_word {
     my ( $self, $word ) = @_;
+
+    $word = $self->_stemword($word);
 
     my $emotion = Lingua::EN::Opinion::Emotion->new();
 
@@ -299,6 +349,7 @@ sub get_sentence {
     my %score;
 
     for my $word ( @words ) {
+        $word = $self->_stemword($word);
         $score{$word} = $self->get_word($word);
     }
 
@@ -321,6 +372,7 @@ sub nrc_get_sentence {
     my %score;
 
     for my $word ( @words ) {
+        $word = $self->_stemword($word);
         $score{$word} = $self->nrc_get_word($word);
     }
 
@@ -332,6 +384,18 @@ sub _tokenize {
     $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
     my @words = split /\s+/, $sentence;
     return @words;
+}
+
+sub _stemword {
+    my ( $self, $word ) = @_;
+
+    if ( $self->stem ) {
+        my @stems = $self->stemmer->stemWord($word);
+        $word = [ sort @stems ]->[0]
+            if @stems;
+    }
+
+    return $word;
 }
 
 1;
