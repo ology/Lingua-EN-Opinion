@@ -12,9 +12,11 @@ use Lingua::EN::Opinion::Positive;
 use Lingua::EN::Opinion::Negative;
 use Lingua::EN::Opinion::Emotion;
 
+use Carp;
 use File::Slurper qw( read_text );
 use Lingua::EN::Sentence qw( get_sentences );
 use Statistics::Lite qw( mean );
+use Try::Tiny;
 
 =head1 SYNOPSIS
 
@@ -93,11 +95,16 @@ has stemmer => (
 );
 
 sub _build_stemmer {
-    require WordNet::QueryData;
-    require WordNet::stem;
-    my $wn      = WordNet::QueryData->new();
-    my $stemmer = WordNet::stem->new($wn);
-    return $stemmer;
+    try {
+        require WordNet::QueryDataX;
+        require WordNet::stem;
+        my $wn      = WordNet::QueryData->new();
+        my $stemmer = WordNet::stem->new($wn);
+        return $stemmer;
+    }
+    catch {
+        croak 'The WordNet::QueryData and WordNet::stem modules must be installed and working to enable stemming support';
+    };
 }
 
 =head2 sentences
