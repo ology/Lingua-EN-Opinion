@@ -21,7 +21,7 @@ use Try::Tiny;
 =head1 SYNOPSIS
 
   use Lingua::EN::Opinion;
-  my $opinion = Lingua::EN::Opinion->new( file => '/some/file.txt' );
+  my $opinion = Lingua::EN::Opinion->new( file => '/some/file.txt', stem => 1 );
   $opinion->analyze();
   my $score = $opinion->averaged_score(5);
   my $sentiment = $opinion->get_word('foo');
