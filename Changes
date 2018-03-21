@@ -1,6 +1,9 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Add optional word stemming support.
+
+0.0801 2018-03-17 15:59:18
     - Improve documentation slightly again.
     - Add score-sentence.psgi to the example scripts.
     - Modularize duplicated code.
