@@ -69,6 +69,10 @@ has text => (
 
 Boolean flag to indicate that word stemming should take place.
 
+For example, "horses" becaomes "horse" and "hooves" becomes "hoof."
+
+This is the proper way to use this module.
+
 =cut
 
 has stem => (
