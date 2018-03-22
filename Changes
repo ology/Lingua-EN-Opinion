@@ -2,6 +2,7 @@ Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
     - Make the sentiment modules object attributes instead of re-instantiating them constantly.
+    - Improve documentation.
 
 0.1102 2018-03-21 16:42:44
     - Improve documentation.
