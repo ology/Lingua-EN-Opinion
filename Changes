@@ -1,6 +1,10 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Don't allow digits in tokenization.
+    - Only return defined words from the tokenization function.
+
+0.12 2018-03-21 22:33:39
     - Make the sentiment modules object attributes instead of re-instantiating them constantly.
     - Improve documentation.
 
