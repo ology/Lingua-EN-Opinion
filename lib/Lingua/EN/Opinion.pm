@@ -143,6 +143,57 @@ has nrc_scores => (
     default  => sub { [] },
 );
 
+=head2 positive
+
+Computed result.
+
+=cut
+
+has positive => (
+    is       => 'rw',
+    init_arg => undef,
+    lazy     => 1,
+    builder  => 1,
+);
+
+sub _build_positive {
+    return Lingua::EN::Opinion::Positive->new;
+}
+
+=head2 negative
+
+Computed result.
+
+=cut
+
+has negative => (
+    is       => 'rw',
+    init_arg => undef,
+    lazy     => 1,
+    builder  => 1,
+);
+
+sub _build_negative {
+    return Lingua::EN::Opinion::Negative->new;
+}
+
+=head2 emotion
+
+Computed result.
+
+=cut
+
+has emotion => (
+    is       => 'rw',
+    init_arg => undef,
+    lazy     => 1,
+    builder  => 1,
+);
+
+sub _build_emotion {
+    return Lingua::EN::Opinion::Emotion->new;
+}
+
 =head1 METHODS
 
 =head2 new()
@@ -173,9 +224,6 @@ sub analyze {
 
     my @scores;
 
-    my $positive = Lingua::EN::Opinion::Positive->new();
-    my $negative = Lingua::EN::Opinion::Negative->new();
-
     for my $sentence ( @sentences ) {
         my @words = _tokenize($sentence);
 
@@ -184,8 +232,8 @@ sub analyze {
         for my $word ( @words ) {
             $word = $self->_stemword($word);
 
-            $score += exists $positive->wordlist->{$word} ? 1
-                    : exists $negative->wordlist->{$word} ? -1 : 0;
+            $score += exists $self->positive->wordlist->{$word} ? 1
+                    : exists $self->negative->wordlist->{$word} ? -1 : 0;
         }
 
         push @scores, $score;
@@ -263,8 +311,6 @@ sub nrc_sentiment {
 
     my @scores;
 
-    my $emotion = Lingua::EN::Opinion::Emotion->new();
-
     for my $sentence ( @sentences ) {
         my @words = _tokenize($sentence);
 
@@ -273,9 +319,9 @@ sub nrc_sentiment {
         for my $word ( @words ) {
             $word = $self->_stemword($word);
 
-            if ( exists $emotion->wordlist->{$word} ) {
-                for my $key ( keys %{ $emotion->wordlist->{$word} } ) {
-                    $score->{$key} += $emotion->wordlist->{$word}{$key};
+            if ( exists $self->emotion->wordlist->{$word} ) {
+                for my $key ( keys %{ $self->emotion->wordlist->{$word} } ) {
+                    $score->{$key} += $self->emotion->wordlist->{$word}{$key};
                 }
             }
         }
@@ -303,13 +349,10 @@ sub get_word {
 
     $word = $self->_stemword($word);
 
-    my $positive = Lingua::EN::Opinion::Positive->new();
-    my $negative = Lingua::EN::Opinion::Negative->new();
-
-    return exists $positive->wordlist->{$word} || exists $negative->wordlist->{$word}
+    return exists $self->positive->wordlist->{$word} || exists $self->negative->wordlist->{$word}
         ? {
-            positive => exists $positive->wordlist->{$word} ? 1 : 0,
-            negative => exists $negative->wordlist->{$word} ? 1 : 0,
+            positive => exists $self->positive->wordlist->{$word} ? 1 : 0,
+            negative => exists $self->negative->wordlist->{$word} ? 1 : 0,
         }
         : undef;
 }
@@ -328,10 +371,8 @@ sub nrc_get_word {
 
     $word = $self->_stemword($word);
 
-    my $emotion = Lingua::EN::Opinion::Emotion->new();
-
-    return exists $emotion->wordlist->{$word}
-        ? $emotion->wordlist->{$word}
+    return exists $self->emotion->wordlist->{$word}
+        ? $self->emotion->wordlist->{$word}
         : undef;
 }
 
