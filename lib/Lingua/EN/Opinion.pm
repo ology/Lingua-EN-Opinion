@@ -2,7 +2,7 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the emotional sentiment of text
 
-our $VERSION = '0.12';
+our $VERSION = '0.1201';
 
 use Moo;
 use strictures 2;
@@ -429,7 +429,8 @@ sub nrc_get_sentence {
 sub _tokenize {
     my ($sentence) = @_;
     $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
-    my @words = split /\s+/, $sentence;
+    $sentence =~ s/\d//g;           # Drop digits
+    my @words = grep { $_ } split /\s+/, $sentence;
     return @words;
 }
 
