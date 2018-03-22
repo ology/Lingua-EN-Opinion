@@ -102,8 +102,10 @@ sub _build_stemmer {
     try {
         require WordNet::QueryData;
         require WordNet::stem;
+
         my $wn      = WordNet::QueryData->new();
         my $stemmer = WordNet::stem->new($wn);
+
         return $stemmer;
     }
     catch {
