@@ -1,6 +1,8 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+
+0.1203 2018-03-23 20:48:26
     - Lowercase the words in tokenize.
 
 0.1201 2018-03-21 23:29:45
