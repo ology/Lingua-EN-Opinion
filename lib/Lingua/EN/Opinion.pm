@@ -2,7 +2,7 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the emotional sentiment of text
 
-our $VERSION = '0.1203';
+our $VERSION = '0.1300';
 
 use Moo;
 use strictures 2;
@@ -220,13 +220,7 @@ B<scores> and B<sentences> attributes.
 sub analyze {
     my ($self) = @_;
 
-    unless ( @{ $self->sentences } ) {
-        my $contents = $self->file ? read_text( $self->file ) : $self->text;
-
-        $self->sentences( get_sentences($contents) );
-    }
-
-    my @sentences = map { $_ } @{ $self->sentences };
+    my @sentences = $self->_get_sentences();
 
     my @scores;
 
@@ -307,13 +301,7 @@ sub nrc_sentiment {
 
     my $null_state = { anger=>0, anticipation=>0, disgust=>0, fear=>0, joy=>0, negative=>0, positive=>0, sadness=>0, surprise=>0, trust=>0 };
 
-    unless ( @{ $self->sentences } ) {
-        my $contents = $self->file ? read_text( $self->file ) : $self->text;
-
-        $self->sentences( get_sentences($contents) );
-    }
-
-    my @sentences = map { $_ } @{ $self->sentences };
+    my @sentences = $self->_get_sentences();
 
     my @scores;
 
@@ -444,6 +432,17 @@ sub _stemword {
     }
 
     return $word;
+}
+
+sub _get_sentences {
+    my ($self) = @_;
+
+    unless ( @{ $self->sentences } ) {
+        my $contents = $self->file ? read_text( $self->file ) : $self->text;
+        $self->sentences( get_sentences($contents) );
+    }
+
+    return map { $_ } @{ $self->sentences };
 }
 
 1;
