@@ -1,0 +1,53 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+use File::Find::Rule;
+use Lingua::EN::Opinion;
+use List::Util qw( min max sum0 );
+use Statistics::Lite qw( mean );
+use IO::Prompt::Tiny qw/prompt/;
+
+my $dir = shift || die "Usage: perl $0 /some/folder/of/text/files [verbose]\n";
+my $verbose = shift || 0;
+
+my @files = File::Find::Rule->file()->name('*.txt')->in($dir);
+
+my $total = 0;
+
+for my $file ( @files ) {
+    my $opinion = Lingua::EN::Opinion->new( file => $file );
+    $opinion->analyze();
+
+    my %score;
+    @score{ @{ $opinion->sentences } } = @{ $opinion->scores };
+
+    my $min = min( @{ $opinion->scores } );
+    my $max = max( @{ $opinion->scores } );
+
+    if ( $verbose ) {
+        print "\n", '-' x 50, "\n", "File: $file\n\n";
+        print "Most positive sentences:\n";
+        for my $sentence ( map { [ $score{$_} => $_ ] } @{ $opinion->sentences } ) {
+            next unless $sentence->[0] == $max;
+            print "\t$sentence->[1]\n";
+        }
+        print "\n";
+        print "Most negative sentences:\n";
+        for my $sentence ( map { [ $score{$_} => $_ ] } @{ $opinion->sentences } ) {
+            next unless $sentence->[0] == $min;
+            print "\t$sentence->[1]\n";
+        }
+        print "\n";
+        print 'Total sentence score: ', sum0( @{ $opinion->scores } ), "\n";
+        print 'Total number of sentences: ', scalar( @{ $opinion->sentences } ), "\n";
+        print 'Average sentence score: ', mean( @{ $opinion->scores } ), "\n";
+        print "\n";
+        my $result = prompt('c to continue; q to quit', 'c');
+        last if $result eq 'q';
+    }
+
+    $total += sum0( @{ $opinion->scores } );
+}
+
+print "Total = $total / ", scalar(@files), ' = ', $total / scalar(@files), "\n";
