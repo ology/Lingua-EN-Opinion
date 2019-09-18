@@ -9,9 +9,9 @@ use List::Util qw( sum0 );
 use Statistics::Lite qw( mean );
 use IO::Prompt::Tiny qw( prompt );
 
-my $dir     = shift || die "Usage: perl $0 /some/folder/of/text/files [prompt=0] [vebose=0]\n";
-my $prompt  = shift // 0;
+my $dir     = shift || die "Usage: perl $0 /some/folder/of/text/files [verbose=0] [prompt=0]\n";
 my $verbose = shift // 0;
+my $prompt  = shift // 0;
 
 my @files = File::Find::Rule->file()->name('*.txt')->in($dir);
 
