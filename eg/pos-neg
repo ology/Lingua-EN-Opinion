@@ -19,7 +19,11 @@ my $sents = 0;
 my $pos   = 0;
 my $neg   = 0;
 
+my $i = 0;
+
 for my $file ( sort @files ) {
+    $i++;
+
     my $opinion = Lingua::EN::Opinion->new(
         file => $file,
         stem => 1,
@@ -34,7 +38,7 @@ for my $file ( sort @files ) {
     $total += $sum;
     $sents += scalar @{ $opinion->sentences };
 
-    print "\n", '-' x 50, "\n", "File: $file\n\n";
+    print "\n", '-' x 50, "\n", "$i. File: $file\n\n";
     print 'Total sentence score: ', $sum, "\n";
     print 'Total number of sentences: ', scalar( @{ $opinion->sentences } ), "\n";
     print 'Average sentence score: ', mean( @{ $opinion->scores } ), "\n";
