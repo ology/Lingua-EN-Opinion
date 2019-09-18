@@ -2,7 +2,7 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the emotional sentiment of text
 
-our $VERSION = '0.1501';
+our $VERSION = '0.1502';
 
 use Moo;
 use strictures 2;
@@ -136,7 +136,7 @@ has sentences => (
 
 =head2 scores
 
-Computed result.  An array reference of the score of each word.
+Computed result.  An array reference of the score of each sentence.
 
 =cut
 
@@ -149,7 +149,7 @@ has scores => (
 =head2 nrc_scores
 
 Computed result.  An array reference of hash references containing the
-NRC scores for each word.
+NRC scores for each sentence.
 
 =cut
 
