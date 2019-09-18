@@ -35,11 +35,27 @@ builder {
 
         my $opinion = Lingua::EN::Opinion->new();
 
+        my $score = $opinion->get_sentence($sentence);
+        for my $item ( keys %$score ) {
+            if ( $score->{$item} ) {
+                $score->{$item} = $score->{$item}{positive} ? 1 : -1;
+            }
+            else {
+                delete $score->{$item};
+            }
+        }
+
+        my $nrc_score = $opinion->nrc_get_sentence($sentence);
+        for my $item ( keys %$nrc_score ) {
+            delete $nrc_score->{$item}
+                unless $nrc_score->{$item};
+        }
+
         my $body;
         Template->new->process(\$template, {
             text      => $sentence,
-            score     => Dumper( $opinion->get_sentence($sentence) ),
-            nrc_score => Dumper( $opinion->nrc_get_sentence($sentence) ),
+            score     => Dumper($score),
+            nrc_score => Dumper($nrc_score),
         }, \$body);
 
         my $res = $req->new_response(200);
