@@ -37,7 +37,7 @@ for my $value ( @emotions ) {
     }
 }
 
-printf "known: %d, unknown: %d, known/total: %.2f\n",
+printf "Known: %d, Unknown: %d, Known/Total: %.2f\n",
     $opinion->familiarity->{known},
     $opinion->familiarity->{unknown},
     $opinion->ratio;
