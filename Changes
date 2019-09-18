@@ -1,6 +1,10 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Add a ->ratio method.
+    - Improve documentation.
+
+0.1400 2019-09-17 18:18:51
     - Add a known/unknown familiarity attribute.
     - Add tests.
     - Update eg/ code with the familiarity metric.
