@@ -27,12 +27,13 @@ for my $item ( keys %max ) {
 }
 
 for my $value ( @emotions ) {
+    next if $max{$value} <= 0;
     my $i = 0;
     print "Sentences with the most $value:\n";
     for my $sentence ( @{ $opinion->sentences } ) {
         next if $score{$sentence}->{$value} < $max{$value};
         $i++;
-        print "\t$i. $sentence\n\n";
+        print "\t$i. ($score{$sentence}->{$value}) $sentence\n\n";
     }
 }
 
