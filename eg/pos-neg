@@ -9,8 +9,9 @@ use List::Util qw( sum0 );
 use Statistics::Lite qw( mean );
 use IO::Prompt::Tiny qw( prompt );
 
-my $dir    = shift || die "Usage: perl $0 /some/folder/of/text/files [prompt]\n";
-my $prompt = shift || 0;
+my $dir     = shift || die "Usage: perl $0 /some/folder/of/text/files [prompt=0] [vebose=0]\n";
+my $prompt  = shift // 0;
+my $verbose = shift // 0;
 
 my @files = File::Find::Rule->file()->name('*.txt')->in($dir);
 
@@ -38,17 +39,18 @@ for my $file ( sort @files ) {
     $total += $sum;
     $sents += scalar @{ $opinion->sentences };
 
-    print "\n", '-' x 50, "\n", "$i. File: $file\n\n";
-    print 'Total sentence score: ', $sum, "\n";
-    print 'Total number of sentences: ', scalar( @{ $opinion->sentences } ), "\n";
-    print 'Average sentence score: ', mean( @{ $opinion->scores } ), "\n";
+    if ( $verbose ) {
+        print "\n", '-' x 50, "\n", "$i. File: $file\n\n";
+        print 'Total sentence score: ', $sum, "\n";
+        print 'Total number of sentences: ', scalar( @{ $opinion->sentences } ), "\n";
+        print 'Average sentence score: ', mean( @{ $opinion->scores } ), "\n";
+        printf "Known: %d, Unknown: %d, Known/Total: %.2f\n",
+            $opinion->familiarity->{known},
+            $opinion->familiarity->{unknown},
+            $opinion->ratio;
+    }
 
-    printf "Known: %d, Unknown: %d, Known/Total: %.2f\n",
-        $opinion->familiarity->{known},
-        $opinion->familiarity->{unknown},
-        $opinion->ratio;
-
-    if ( $prompt ) {
+    if ( $prompt && $verbose ) {
         print "\n";
         my $result = prompt('c to continue; q to quit', 'c');
         last if $result eq 'q';
