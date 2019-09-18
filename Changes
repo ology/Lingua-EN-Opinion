@@ -1,7 +1,8 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
-    - Cleaned-up eg/ code.
+    - Clean-up eg/ code.
+    - Improve documentation.
 
 0.1502 2019-09-18 11:31:55
     - Update eg/ code with the ->ratio method.
