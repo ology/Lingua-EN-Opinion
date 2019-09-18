@@ -57,4 +57,4 @@ for my $file ( sort @files ) {
     }
 }
 
-print "\nPositive: $pos, Negative: $neg, Total: $total, Avg: " . ($total / $sents) . "\n";
+print "\nPositive: $pos, Negative: $neg, Total: $total, Avg: ", ($total / $sents), "\n";
