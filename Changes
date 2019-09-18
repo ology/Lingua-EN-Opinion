@@ -1,6 +1,7 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Improve documentation.
 
 0.1500 2019-09-18 08:21:37
     - Add a ->ratio method.
