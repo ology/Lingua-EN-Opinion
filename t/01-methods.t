@@ -174,7 +174,7 @@ $expected = {
 };
 is_deeply $x, $expected, 'nrc_get_sentence';
 
-=pod
+=for stemming
 
 $text = <<'END';
 And a mighty angel took up a stone like a great millstone, and
