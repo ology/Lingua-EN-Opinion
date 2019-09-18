@@ -28,6 +28,8 @@ use Try::Tiny;
   my $score = $opinion->averaged_score(5);
   my $sentiment = $opinion->get_word('foo');
   $sentiment = $opinion->get_sentence('Mary had a little lamb.');
+  my $total = $opinion->familiarity->{known} + $opinion->familiarity->{unknown};
+  print $opinion->familiarity->{known} / $total, "\n";
 
   # Also:
   $opinion = Lingua::EN::Opinion->new( text => 'Mary had a little lamb...' );
@@ -190,6 +192,20 @@ has emotion => (
     default  => sub { Lingua::EN::Opinion::Emotion->new },
 );
 
+=head2 familiarity
+
+Computed result.  Hash reference of total words:
+
+ { known => $x, unknown => $y }
+
+=cut
+
+has familiarity => (
+    is       => 'rw',
+    init_arg => undef,
+    default  => sub { { known => 0, unknown => 0 } },
+);
+
 =head1 METHODS
 
 =head2 new()
@@ -213,6 +229,7 @@ sub analyze {
     my @sentences = $self->_get_sentences();
 
     my @scores;
+    my ( $known, $unknown ) = ( 0, 0 );
 
     for my $sentence ( @sentences ) {
         my @words = _tokenize($sentence);
@@ -222,12 +239,23 @@ sub analyze {
         for my $word ( @words ) {
             $word = $self->_stemword($word);
 
-            $score += exists $self->positive->wordlist->{$word} ? 1
-                    : exists $self->negative->wordlist->{$word} ? -1 : 0;
+            my $value = exists $self->positive->wordlist->{$word} ? 1
+                : exists $self->negative->wordlist->{$word} ? -1 : 0;
+
+            if ( $value ) {
+                $known++;
+            }
+            else {
+                $unknown++;
+            }
+
+            $score += $value;
         }
 
         push @scores, $score;
     }
+
+    $self->familiarity( { known => $known, unknown => $unknown } );
 
     $self->scores( \@scores );
 }
@@ -294,6 +322,7 @@ sub nrc_sentiment {
     my @sentences = $self->_get_sentences();
 
     my @scores;
+    my ( $known, $unknown ) = ( 0, 0 );
 
     for my $sentence ( @sentences ) {
         my @words = _tokenize($sentence);
@@ -304,9 +333,14 @@ sub nrc_sentiment {
             $word = $self->_stemword($word);
 
             if ( exists $self->emotion->wordlist->{$word} ) {
+                $known++;
+
                 for my $key ( keys %{ $self->emotion->wordlist->{$word} } ) {
                     $score->{$key} += $self->emotion->wordlist->{$word}{$key};
                 }
+            }
+            else {
+                $unknown++;
             }
         }
 
@@ -315,6 +349,8 @@ sub nrc_sentiment {
 
         push @scores, $score;
     }
+
+    $self->familiarity( { known => $known, unknown => $unknown } );
 
     $self->nrc_scores( \@scores );
 }
