@@ -79,7 +79,7 @@ Boolean flag to indicate that word stemming should take place.
 
 For example, "horses" becomes "horse" and "hooves" becomes "hoof."
 
-This is the proper way to use this module.
+This is the proper way to use this module but takes ... a lot longer.
 
 =cut
 
