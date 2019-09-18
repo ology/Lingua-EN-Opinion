@@ -52,11 +52,13 @@ builder {
         }
 
         my $body;
-        Template->new->process(\$template, {
-            text      => $sentence,
-            score     => Dumper($score),
-            nrc_score => Dumper($nrc_score),
-        }, \$body);
+        Template->new->process(
+            \$template,
+            {   text      => $sentence,
+                score     => Dumper($score),
+                nrc_score => Dumper($nrc_score), },
+            \$body
+        );
 
         my $res = $req->new_response(200);
         $res->content_type('text/html; charset=utf-8');
