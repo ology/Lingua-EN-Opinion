@@ -20,7 +20,10 @@ my $pos   = 0;
 my $neg   = 0;
 
 for my $file ( sort @files ) {
-    my $opinion = Lingua::EN::Opinion->new( file => $file );
+    my $opinion = Lingua::EN::Opinion->new(
+        file => $file,
+        stem => 1,
+    );
     $opinion->analyze();
 
     my $sum = sum0 @{ $opinion->scores };
