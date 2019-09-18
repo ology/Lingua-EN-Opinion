@@ -124,7 +124,7 @@ sub _build_stemmer {
 
 =head2 sentences
 
-Computed result.
+Computed result.  An array reference of every sentence!
 
 =cut
 
@@ -136,7 +136,7 @@ has sentences => (
 
 =head2 scores
 
-Computed result.
+Computed result.  An array reference of the score of each word.
 
 =cut
 
@@ -148,7 +148,8 @@ has scores => (
 
 =head2 nrc_scores
 
-Computed result.
+Computed result.  An array reference of hash references containing the
+NRC scores for each word.
 
 =cut
 
@@ -160,7 +161,7 @@ has nrc_scores => (
 
 =head2 positive
 
-Computed result.
+Computed result.  A module to use to L</analyze>.
 
 =cut
 
@@ -172,7 +173,7 @@ has positive => (
 
 =head2 negative
 
-Computed result.
+Computed result.  A module to use to L</analyze>.
 
 =cut
 
@@ -184,7 +185,7 @@ has negative => (
 
 =head2 emotion
 
-Computed result.
+Computed result.  The module to used to find the L</nrc_sentiment>.
 
 =cut
 
@@ -196,7 +197,7 @@ has emotion => (
 
 =head2 familiarity
 
-Computed result.  Hash reference of total words:
+Computed result.  Hash reference of total known and unknown words:
 
  { known => $x, unknown => $y }
 
@@ -212,7 +213,11 @@ has familiarity => (
 
 =head2 new
 
-  $opinion = Lingua::EN::Opinion->new(%arguments);
+  $opinion = Lingua::EN::Opinion->new(
+    file => $file,
+    text => $text,
+    stem => $stem,
+  );
 
 Create a new C<Lingua::EN::Opinion> object.
 
@@ -517,6 +522,8 @@ L<Lingua::EN::Sentence>
 L<Statistics::Lite>
 
 L<Try::Tiny>
+
+L<WordNet::QueryData> and L<WordNet::stem> for stemming
 
 L<https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon>
 
