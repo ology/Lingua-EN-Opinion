@@ -53,8 +53,8 @@ for my $file ( sort @files ) {
 
     if ( $verbose ) {
         print "\n", '-' x 50, "\n", "$i. File: $file\n\n";
-        print "Total sentence score: $sum\n";
-        print "Total number of sentences: $sent_num\n";
+        print "Sentence score: $sum\n";
+        print "Number of sentences: $sent_num\n";
         print "Average sentence score: $mean\n";
         printf "Words known: %d, unknown: %d, known/total: %.4f\n",
             $opinion->familiarity->{known},
