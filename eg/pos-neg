@@ -69,5 +69,5 @@ for my $file ( sort @files ) {
 }
 
 print "\n", '-' x 50, "\n";
-printf "\nPositive: %d, Negative: %d, Total: %d, Avg score: %.4f, Avg weighted score: %.4f\n",
+printf "Positive: %d, Negative: %d, Total: %d, Avg score: %.4f, Avg weighted score: %.4f\n",
     $pos, $neg, $total, $total / $sents, mean(@score);
