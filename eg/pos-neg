@@ -15,6 +15,8 @@ my $prompt  = shift // 0;
 
 my @files = File::Find::Rule->file()->name('*.txt')->in($dir);
 
+$SIG{'INT'} = \&summarize;
+
 my $total = 0;
 my $sents = 0;
 my $pos   = 0;
@@ -68,6 +70,11 @@ for my $file ( sort @files ) {
     }
 }
 
-print "\n", '-' x 50, "\n";
-printf "Positive: %d, Negative: %d, Total: %d, Avg score: %.4f, Avg weighted score: %.4f\n",
-    $pos, $neg, $total, $total / $sents, mean(@score);
+summarize();
+
+sub summarize {
+    print "\n", '-' x 50, "\n";
+    printf "Positive: %d, Negative: %d, Total: %d, Avg score: %.4f, Avg weighted score: %.4f\n",
+        $pos, $neg, $total, $total / $sents, mean(@score);
+    exit(0);
+};
