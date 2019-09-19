@@ -37,3 +37,5 @@ printf "Known: %d, Unknown: %d, Known/Total: %.2f\n",
     $opinion->familiarity->{known},
     $opinion->familiarity->{unknown},
     $opinion->ratio;
+
+printf "Weighted score: %.4f\n", mean( @{ $opinion->scores } ) * $opinion->ratio;
