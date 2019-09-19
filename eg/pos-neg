@@ -55,7 +55,7 @@ for my $file ( sort @files ) {
         print "\n", '-' x 50, "\n", "$i. File: $file\n\n";
         print "Sentence score: $sum\n";
         print "Number of sentences: $sent_num\n";
-        print "Average sentence score: $mean\n";
+        printf "Average sentence score: %.4f\n", $mean;
         printf "Words known: %d, unknown: %d, known/total: %.4f\n",
             $opinion->familiarity->{known},
             $opinion->familiarity->{unknown},
@@ -74,7 +74,9 @@ summarize();
 
 sub summarize {
     print "\n", '-' x 50, "\n";
-    printf "Positive: %d, Negative: %d, Total: %d, Avg score: %.4f, Avg weighted score: %.4f\n",
-        $pos, $neg, $total, $total / $sents, mean(@score);
+    printf "Positive: %d, Negative: %d, Positive/Total: %.4f, Negative/Total: %.4f\n",
+        $pos, $neg, $pos / ( $pos + $neg ), $neg / ( $pos + $neg );
+    printf "Total score: %d, Total sentences: %d, Avg score: %.4f, Avg weighted score: %.4f\n",
+        $total, $sents, $total / $sents, mean(@score);
     exit(0);
 };
