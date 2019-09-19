@@ -20,6 +20,8 @@ my $sents = 0;
 my $pos   = 0;
 my $neg   = 0;
 
+my @score = ();
+
 my $i = 0;
 
 for my $file ( sort @files ) {
@@ -37,17 +39,26 @@ for my $file ( sort @files ) {
     $neg++ if $sum < 0;
 
     $total += $sum;
-    $sents += scalar @{ $opinion->sentences };
+
+    my $sent_num = scalar @{ $opinion->sentences };
+
+    $sents += $sent_num;
+
+    my $mean  = mean( @{ $opinion->scores } );
+    my $ratio = $opinion->ratio;
+
+    push @score, $mean * $ratio;
 
     if ( $verbose ) {
         print "\n", '-' x 50, "\n", "$i. File: $file\n\n";
-        print 'Total sentence score: ', $sum, "\n";
-        print 'Total number of sentences: ', scalar( @{ $opinion->sentences } ), "\n";
-        print 'Average sentence score: ', mean( @{ $opinion->scores } ), "\n";
-        printf "Known: %d, Unknown: %d, Known/Total: %.2f\n",
+        print "Total sentence score: $sum\n";
+        print "Total number of sentences: $sent_num\n";
+        print "Average sentence score: $mean\n";
+        printf "Words known: %d, unknown: %d, known/total: %.4f\n",
             $opinion->familiarity->{known},
             $opinion->familiarity->{unknown},
-            $opinion->ratio;
+            $ratio;
+        printf "Weighted score: %.4f\n", $mean * $ratio;
     }
 
     if ( $prompt && $verbose ) {
@@ -57,4 +68,6 @@ for my $file ( sort @files ) {
     }
 }
 
-print "\nPositive: $pos, Negative: $neg, Total: $total, Avg: ", ($total / $sents), "\n";
+print "\n", '-' x 50, "\n";
+printf "\nPositive: %d, Negative: %d, Total: %d, Avg score: %.4f, Avg weighted score: %.4f\n",
+    $pos, $neg, $total, $total / $sents, mean(@score);
