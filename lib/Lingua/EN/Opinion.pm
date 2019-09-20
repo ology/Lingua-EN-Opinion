@@ -26,6 +26,8 @@ use Try::Tiny;
   my $opinion = Lingua::EN::Opinion->new( file => '/some/file.txt', stem => 1 );
   $opinion->analyze();
 
+  # Now you can process $opinion->scores...
+
   my $ratio = $opinion->ratio(); # Knowns / ( Knowns + Unknowns )
   $ratio = $opinion->ratio(1); # Unknowns / ( Knowns + Unknowns )
 
@@ -37,6 +39,8 @@ use Try::Tiny;
   # NRC:
   $opinion = Lingua::EN::Opinion->new( text => 'Mary had a little lamb...' );
   $opinion->nrc_sentiment();
+
+  # Now you can process $opinion->nrc_scores...
 
   $ratio = $opinion->ratio();
   $ratio = $opinion->ratio(1);
