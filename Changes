@@ -1,6 +1,8 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Fix the eg/pos-neg code.
+    - Improve documentation.
 
 0.1503 2019-09-20 09:22:00
     - Clean-up eg/ code.
