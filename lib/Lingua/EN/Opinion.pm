@@ -50,6 +50,12 @@ A C<Lingua::EN::Opinion> object measures the emotional sentiment of
 text and saves the results in the B<scores> and B<nrc_scores>
 attributes.
 
+When run against the positive and negative classified training reviews
+in the dataset referenced under L</"SEE ALSO">, this module does ...
+okay.  Out of the 12.5k positive reviews, the F<eg/pos-neg> program
+gets 70% correct.  Out of the same number of negative reviews, the
+program gets 74% correct.
+
 =head1 ATTRIBUTES
 
 =head2 file
@@ -530,5 +536,7 @@ L<https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon>
 L<http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm>
 
 L<http://techn.ology.net/book-of-revelation-sentiment-analysis/> is a write-up using this technique.
+
+L<https://ai.stanford.edu/~amaas/data/sentiment/> is the "Large Movie Review Dataset"
 
 =cut
