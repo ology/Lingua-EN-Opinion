@@ -26,27 +26,27 @@ use Try::Tiny;
   my $opinion = Lingua::EN::Opinion->new( file => '/some/file.txt', stem => 1 );
   $opinion->analyze();
 
-  # Now you can process $opinion->scores...
+  my $scores = $opinion->scores;
 
   my $ratio = $opinion->ratio(); # Knowns / ( Knowns + Unknowns )
   $ratio = $opinion->ratio(1); # Unknowns / ( Knowns + Unknowns )
 
-  my $score = $opinion->averaged_score(5);
+  $scores = $opinion->averaged_score(5);
 
-  my $sentiment = $opinion->get_word('foo');
-  $sentiment = $opinion->get_sentence('Mary had a little lamb.');
+  my $score = $opinion->get_word('foo');
+  $score = $opinion->get_sentence('Mary had a little lamb.');
 
   # NRC:
   $opinion = Lingua::EN::Opinion->new( text => 'Mary had a little lamb...' );
   $opinion->nrc_sentiment();
 
-  # Now you can process $opinion->nrc_scores...
+  my $scores = $opinion->nrc_scores;
 
   $ratio = $opinion->ratio();
   $ratio = $opinion->ratio(1);
 
-  $sentiment = $opinion->nrc_get_word('foo');
-  $sentiment = $opinion->nrc_get_sentence('Mary had a little lamb.');
+  $score = $opinion->nrc_get_word('foo');
+  $score = $opinion->nrc_get_sentence('Mary had a little lamb.');
 
 =head1 DESCRIPTION
 
