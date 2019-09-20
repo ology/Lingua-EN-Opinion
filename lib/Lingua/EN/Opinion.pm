@@ -40,7 +40,7 @@ use Try::Tiny;
   $opinion = Lingua::EN::Opinion->new( text => 'Mary had a little lamb...' );
   $opinion->nrc_sentiment();
 
-  my $scores = $opinion->nrc_scores;
+  $scores = $opinion->nrc_scores;
 
   $ratio = $opinion->ratio();
   $ratio = $opinion->ratio(1);
