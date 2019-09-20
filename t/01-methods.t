@@ -55,19 +55,7 @@ is_deeply $obj->familiarity, { known => 10, unknown => 80 }, 'familiarity';
 is sprintf( '%.3f', $obj->ratio ), 0.111, 'known ratio';
 is sprintf( '%.3f', $obj->ratio(1) ), 0.889, 'unknown ratio';
 
-my $text = <<'END';
-I begin this story with a neutral statement.
-Basically this is a very silly test.
-You are testing the Lingua::EN::Opinion package using short, inane sentences.
-I am actually very happy today.
-I have finally finished writing this package.
-Tomorrow I will be very sad.
-I won't have anything left to do.
-I might get angry and decide to do something horrible.
-I might destroy the entire package and start from scratch.
-Then again, I might find it satisfying to have completed my this package.
-You might even say it's beautiful!
-END
+my $text = join "\n", @$sentences;
 
 $obj = Lingua::EN::Opinion->new( text => $text );
 isa_ok $obj, 'Lingua::EN::Opinion';
