@@ -26,7 +26,7 @@ throws_ok {
 
 throws_ok {
     $obj = Lingua::EN::Opinion->new( file => 'foo' );
-} qr/File foo does not exist/, 'bogus file';
+} qr/does not exist/, 'bogus file';
 
 $obj = Lingua::EN::Opinion->new( file => 't/test.txt' );
 isa_ok $obj, 'Lingua::EN::Opinion';
