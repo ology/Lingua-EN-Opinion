@@ -61,12 +61,12 @@ for my $file ( sort @files ) {
             $opinion->familiarity->{unknown},
             $ratio;
         printf "Weighted score: %.4f\n", $mean * $ratio;
-    }
 
-    if ( $prompt && $verbose ) {
-        print "\n";
-        my $result = prompt('c to continue; q to quit', 'c');
-        last if $result eq 'q';
+        if ( $prompt ) {
+            print "\n";
+            my $result = prompt('c to continue; q to quit', 'c');
+            last if $result eq 'q';
+        }
     }
 }
 
