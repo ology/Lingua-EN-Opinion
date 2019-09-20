@@ -75,7 +75,7 @@ summarize();
 sub summarize {
     print "\n", '-' x 50, "\n";
     printf "Positive: %d, Negative: %d, Positive/Total: %.4f, Negative/Total: %.4f\n",
-        $pos, $neg, $pos / ( $pos + $neg ), $neg / ( $pos + $neg );
+        $pos, $neg, $pos / @files, $neg / @files;
     printf "Total score: %d, Total sentences: %d, Avg score: %.4f, Avg weighted score: %.4f\n",
         $total, $sents, $total / $sents, mean(@score);
     exit(0);
