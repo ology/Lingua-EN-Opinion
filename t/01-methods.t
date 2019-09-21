@@ -46,12 +46,12 @@ my $sentences = [
 ];
 
 $obj->analyze;
+is scalar( @{ $obj->sentences } ), scalar( @{ $obj->scores } ), 'sentences == scores';
 my $got = $obj->sentences;
 is_deeply $got, $sentences, 'sentences';
 $got = $obj->scores;
 my $expected = [ 0, -1, -1, 1, 0, -1, 0, -2, -2, 1, 1 ];
 is_deeply $got, $expected, 'scores';
-is scalar( @{ $obj->sentences } ), scalar( @{ $obj->scores } ), 'sentences == scores';
 is_deeply $obj->familiarity, { known => 10, unknown => 80 }, 'familiarity';
 is sprintf( '%.3f', $obj->ratio ), 0.111, 'known ratio';
 is sprintf( '%.3f', $obj->ratio(1) ), 0.889, 'unknown ratio';
@@ -61,12 +61,12 @@ my $text = join "\n", @$sentences;
 $obj = Lingua::EN::Opinion->new( text => $text );
 isa_ok $obj, 'Lingua::EN::Opinion';
 $obj->analyze;
+is scalar( @{ $obj->sentences } ), scalar( @{ $obj->scores } ), 'sentences == scores';
 $got = $obj->sentences;
 is_deeply $got, $sentences, 'sentences';
 $got = $obj->scores;
 $expected = [ 0, -1, -1, 1, 0, -1, 0, -2, -2, 1, 1 ];
 is_deeply $got, $expected, 'scores';
-is scalar( @{ $obj->sentences } ), scalar( @{ $obj->scores } ), 'sentences == scores';
 is_deeply $obj->familiarity, { known => 10, unknown => 80 }, 'familiarity';
 is sprintf( '%.3f', $obj->ratio ), 0.111, 'known ratio';
 is sprintf( '%.3f', $obj->ratio(1) ), 0.889, 'unknown ratio';
@@ -89,8 +89,8 @@ $expected = {
 };
 
 $obj->nrc_analyze();
-is_deeply $obj->nrc_scores->[0], $expected, 'nrc_scores';
 is scalar( @{ $obj->sentences } ), scalar( @{ $obj->scores } ), 'sentences == scores';
+is_deeply $obj->nrc_scores->[0], $expected, 'nrc_scores';
 is_deeply $obj->familiarity, { known => 27, unknown => 63 }, 'familiarity';
 is $obj->ratio, 0.3, 'known ratio';
 is $obj->ratio(1), 0.7, 'unknown ratio';
