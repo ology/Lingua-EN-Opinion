@@ -76,16 +76,16 @@ $expected = [ -0.5, 0, -0.5, -1, -0.5, 1 ];
 is_deeply $got, $expected, 'averaged_score';
 
 $expected = {
-    anger => 0,
+    anger        => 0,
     anticipation => 1,
-    disgust => 0,
-    fear => 0,
-    joy => 0,
-    negative => 0,
-    positive => 1,
-    sadness => 0,
-    surprise => 0,
-    trust => 2
+    disgust      => 0,
+    fear         => 0,
+    joy          => 0,
+    negative     => 0,
+    positive     => 1,
+    sadness      => 0,
+    surprise     => 0,
+    trust        => 2
 };
 
 $obj->nrc_analyze();
@@ -124,16 +124,16 @@ is_deeply $got, $expected, 'positive nrc_get_word';
 
 $got = $obj->nrc_get_word('unhappy');
 $expected = {
-    anger => 1,
+    anger        => 1,
     anticipation => 0,
-    disgust => 1,
-    fear => 0,
-    joy => 0,
-    negative => 1,
-    positive => 0,
-    sadness => 1,
-    surprise => 0,
-    trust => 0,
+    disgust      => 1,
+    fear         => 0,
+    joy          => 0,
+    negative     => 1,
+    positive     => 0,
+    sadness      => 1,
+    surprise     => 0,
+    trust        => 0,
 };
 is_deeply $got, $expected, 'negative nrc_get_word';
 
