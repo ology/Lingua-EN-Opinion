@@ -120,16 +120,19 @@ $expected = {
 };
 is_deeply $got, $expected, 'nrc_get_word';
 
-$text = 'I am actually very happy today.';
+$text = 'I am actually very happy today. I am happy!';
+$expected = [
+    0,
+    0,
+    0,
+    0,
+    { positive => 1, negative => 0 },
+    0,
+    0,
+    0,
+    { positive => 1, negative => 0 },
+];
 $got = $obj->get_sentence($text);
-$expected = {
-    i        => undef,
-    am       => undef,
-    actually => undef,
-    very     => undef,
-    happy    => { 'negative' => 0, 'positive' => 1 },
-    today    => undef,
-};
 is_deeply $got, $expected, 'get_sentence';
 
 $got = $obj->nrc_get_sentence($text);
