@@ -274,12 +274,7 @@ sub analyze {
         my $score = 0;
 
         for my $word ( @words ) {
-            $word = $self->_stemword($word)
-                if $self->stem;
-
-            my $value = exists $self->positive->wordlist->{$word} ? 1
-                : exists $self->negative->wordlist->{$word} ? -1 : 0;
-
+            my $value = $self->get_word($word);
             if ( $value ) {
                 $known++;
             }
@@ -287,7 +282,8 @@ sub analyze {
                 $unknown++;
             }
 
-            $score += $value;
+            $score += $value
+                if defined $value;
         }
 
         push @scores, $score;
