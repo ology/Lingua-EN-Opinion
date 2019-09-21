@@ -432,8 +432,8 @@ sub get_word {
   $sentiment = $opinion->nrc_get_word($word);
 
 Get the NRC emotional sentiment for a given word.  Return a hash
-reference of the NRC emotions.  If the word does not exist, return
-C<undef>.
+reference of the NRC emotions as detailed in L</nrc_analyze>.  If the
+word does not exist, return C<undef>.
 
 =cut
 
