@@ -371,12 +371,10 @@ sub nrc_analyze {
 
     my $null_state = { anger=>0, anticipation=>0, disgust=>0, fear=>0, joy=>0, negative=>0, positive=>0, sadness=>0, surprise=>0, trust=>0 };
 
-    my @sentences = $self->_get_sentences();
-
     my @scores;
     my ( $known, $unknown ) = ( 0, 0 );
 
-    for my $sentence ( @sentences ) {
+    for my $sentence ( $self->_get_sentences ) {
         my @words = _tokenize($sentence);
 
         my $score;
