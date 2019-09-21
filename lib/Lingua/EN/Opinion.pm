@@ -31,14 +31,14 @@ use Try::Tiny;
   my $ratio = $opinion->ratio(); # Knowns / ( Knowns + Unknowns )
   $ratio = $opinion->ratio(1); # Unknowns / ( Knowns + Unknowns )
 
-  $scores = $opinion->averaged_score(5);
+  $scores = $opinion->averaged_scores(5);
 
   my $score = $opinion->get_word('foo');
   $score = $opinion->get_sentence('Mary had a little lamb.');
 
   # NRC:
   $opinion = Lingua::EN::Opinion->new( text => 'Mary had a little lamb...' );
-  $opinion->nrc_sentiment();
+  $opinion->nrc_analyze();
 
   $scores = $opinion->nrc_scores;
 
@@ -63,6 +63,8 @@ correct.
 
 =head2 file
 
+  $file = $opinion->file;
+
 The text file to analyze.
 
 =cut
@@ -74,6 +76,8 @@ has file => (
 
 =head2 text
 
+  $text = $opinion->text;
+
 A text string to analyze instead of a text file.
 
 =cut
@@ -83,6 +87,8 @@ has text => (
 );
 
 =head2 stem
+
+  $stem = $opinion->stem;
 
 Boolean flag to indicate that word stemming should take place.
 
@@ -98,6 +104,8 @@ has stem => (
 );
 
 =head2 stemmer
+
+  $stemmer = $opinion->stemmer;
 
 Require the L<WordNet::QueryData> and L<WordNet::stem> modules to stem
 each word of the provided file or text.
@@ -133,6 +141,8 @@ sub _build_stemmer {
 
 =head2 sentences
 
+  $sentences = $opinion->sentences;
+
 Computed result.  An array reference of every sentence!
 
 =cut
@@ -145,6 +155,8 @@ has sentences => (
 
 =head2 scores
 
+  $scores = $opinion->scores;
+
 Computed result.  An array reference of the score of each sentence.
 
 =cut
@@ -156,6 +168,8 @@ has scores => (
 );
 
 =head2 nrc_scores
+
+  $scores = $opinion->nrc_scores;
 
 Computed result.  An array reference of hash references containing the
 NRC scores for each sentence.
@@ -170,6 +184,8 @@ has nrc_scores => (
 
 =head2 positive
 
+  $positive = $opinion->positive;
+
 Computed result.  A module to use to L</analyze>.
 
 =cut
@@ -181,6 +197,8 @@ has positive => (
 );
 
 =head2 negative
+
+  $negative = $opinion->negative;
 
 Computed result.  A module to use to L</analyze>.
 
@@ -194,6 +212,8 @@ has negative => (
 
 =head2 emotion
 
+  $emotion = $opinion->emotion;
+
 Computed result.  The module to used to find the L</nrc_sentiment>.
 
 =cut
@@ -205,6 +225,8 @@ has emotion => (
 );
 
 =head2 familiarity
+
+  $familiarity = $opinion->familiarity;
 
 Computed result.  Hash reference of total known and unknown words:
 
@@ -232,7 +254,7 @@ Create a new C<Lingua::EN::Opinion> object.
 
 =head2 analyze
 
-  $opinion->analyze();
+  $scores = $opinion->analyze();
 
 Measure the positive/negative emotional sentiment of text.
 
@@ -279,9 +301,13 @@ sub analyze {
 
 =head2 averaged_score
 
-  $averaged = $opinion->averaged_score($bins);
+Synonym for the L</averaged_scores> method.
 
-Compute the averaged score given a number of (integer) B<bins>.
+=head2 averaged_scores
+
+  $scores = $opinion->averaged_scores($bins);
+
+Compute the averaged scores given a number of (integer) B<bins>.
 
 Default: C<10>
 
@@ -290,11 +316,13 @@ it loses information detail.
 
 For example, if there are 400 sentences, B<bins> of 10 will result in
 40 data points.  Each point will be the mean of each successive
-bin-sized set of points in the analyzed score.
+bin-sized set of points in the analyzed scores.
 
 =cut
 
-sub averaged_score {
+sub averaged_score { shift->averaged_scores(@_) }
+
+sub averaged_scores {
     my ( $self, $bins ) = @_;
 
     $bins ||= 10;
@@ -312,7 +340,11 @@ sub averaged_score {
 
 =head2 nrc_sentiment
 
-  $opinion->nrc_sentiment();
+Synonym for the L</nrc_analyze> method.
+
+=head2 nrc_analyze
+
+  $scores = $opinion->nrc_analyze();
 
 Compute the NRC sentiment of the given text.
 
@@ -333,7 +365,9 @@ This method sets the B<nrc_scores> and B<sentences> attributes.
 
 =cut
 
-sub nrc_sentiment {
+sub nrc_sentiment { shift->nrc_anaylze(@_) };
+
+sub nrc_anaylze {
     my ($self) = @_;
 
     my $null_state = { anger=>0, anticipation=>0, disgust=>0, fear=>0, joy=>0, negative=>0, positive=>0, sadness=>0, surprise=>0, trust=>0 };
