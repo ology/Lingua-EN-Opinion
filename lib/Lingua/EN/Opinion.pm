@@ -465,13 +465,16 @@ sub get_sentence {
 
     my @words = _tokenize($sentence);
 
-    my %score;
+    my @score = ();
 
     for my $word ( @words ) {
-        $score{$word} = $self->get_word($word);
+        my $score = $self->get_word($word);
+        $score = 0
+            unless $score;
+        push @score, $score;
     }
 
-    return \%score;
+    return \@score;
 }
 
 =head2 nrc_get_sentence
