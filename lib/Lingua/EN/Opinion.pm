@@ -34,7 +34,8 @@ use Try::Tiny;
   $scores = $opinion->averaged_scores(5);
 
   my $score = $opinion->get_word('foo');
-  $score = $opinion->get_sentence('Mary had a little lamb.');
+  my ( $known, $unknown );
+  ( $score, $known, $unknown ) = $opinion->get_sentence('Mary had a little lamb.');
 
   # NRC:
   $opinion = Lingua::EN::Opinion->new( text => 'Mary had a little lamb...' );
@@ -269,23 +270,8 @@ sub analyze {
     my ( $known, $unknown ) = ( 0, 0 );
 
     for my $sentence ( $self->_get_sentences ) {
-        my @words = _tokenize($sentence);
-
         my $score = 0;
-
-        for my $word ( @words ) {
-            my $value = $self->get_word($word);
-            if ( $value ) {
-                $known++;
-            }
-            else {
-                $unknown++;
-            }
-
-            $score += $value
-                if defined $value;
-        }
-
+        ( $score, $known, $unknown ) = $self->get_sentence( $sentence, $known, $unknown );
         push @scores, $score;
     }
 
@@ -446,10 +432,12 @@ sub nrc_get_word {
 
 =head2 get_sentence
 
-  $values = $opinion->get_sentence($sentence);
+  ( $score, $known, $unknown ) = $opinion->get_sentence( $sentence, $known, $unknown );
 
-Return the positive/negative values for the words of the given
-sentence.
+Return the integer value for the summation of the words of the given sentence.
+
+The B<known> and B<unknown> arguments refer to the L</familiarity> and
+are possibly incremented by this routine.
 
 =cut
 
