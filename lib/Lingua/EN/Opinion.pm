@@ -454,20 +454,26 @@ sentence.
 =cut
 
 sub get_sentence {
-    my ( $self, $sentence ) = @_;
+    my ( $self, $sentence, $known, $unknown ) = @_;
 
     my @words = _tokenize($sentence);
 
-    my @score = ();
+    my $score = 0;
 
     for my $word ( @words ) {
-        my $score = $self->get_word($word);
-        $score = 0
-            unless $score;
-        push @score, $score;
+        my $value = $self->get_word($word);
+        if ( $value ) {
+            $known++;
+        }
+        else {
+            $unknown++;
+        }
+
+        $score += $value
+            if defined $value;
     }
 
-    return \@score;
+    return $score, $known, $unknown;
 }
 
 =head2 nrc_get_sentence
