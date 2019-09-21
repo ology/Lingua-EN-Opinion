@@ -1,10 +1,10 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
-    - Make method synonyms for improved names.
     - Improve documentation.
-    - Clean-up code.
-    - Added test cases.
+    - Fix the return values of ->get_sentence and ->nrc_get_sentence.
+    - Make method synonyms for improved names.
+    - Add tests.
 
 0.1505 2019-09-20 17:59:23
     - Fix SYNOPSIS code.
