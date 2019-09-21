@@ -276,7 +276,8 @@ sub analyze {
         my $score = 0;
 
         for my $word ( @words ) {
-            $word = $self->_stemword($word);
+            $word = $self->_stemword($word)
+                if $self->stem;
 
             my $value = exists $self->positive->wordlist->{$word} ? 1
                 : exists $self->negative->wordlist->{$word} ? -1 : 0;
@@ -383,7 +384,8 @@ sub nrc_analyze {
         my $score;
 
         for my $word ( @words ) {
-            $word = $self->_stemword($word);
+            $word = $self->_stemword($word)
+                if $self->stem;
 
             if ( exists $self->emotion->wordlist->{$word} ) {
                 $known++;
@@ -421,7 +423,8 @@ return C<undef>.
 sub get_word {
     my ( $self, $word ) = @_;
 
-    $word = $self->_stemword($word);
+    $word = $self->_stemword($word)
+        if $self->stem;
 
     return exists $self->positive->wordlist->{$word} || exists $self->negative->wordlist->{$word}
         ? {
@@ -444,7 +447,8 @@ C<undef>.
 sub nrc_get_word {
     my ( $self, $word ) = @_;
 
-    $word = $self->_stemword($word);
+    $word = $self->_stemword($word)
+        if $self->stem;
 
     return exists $self->emotion->wordlist->{$word}
         ? $self->emotion->wordlist->{$word}
@@ -529,11 +533,10 @@ sub _tokenize {
 sub _stemword {
     my ( $self, $word ) = @_;
 
-    if ( $self->stem ) {
-        my @stems = $self->stemmer->stemWord($word);
-        $word = [ sort @stems ]->[0]
-            if @stems;
-    }
+    my @stems = $self->stemmer->stemWord($word);
+
+    $word = [ sort @stems ]->[0]
+        if @stems;
 
     return $word;
 }
