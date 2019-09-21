@@ -410,9 +410,9 @@ sub nrc_analyze {
 
   $sentiment = $opinion->get_word($word);
 
-Get the positive/negative sentiment for a given word.  Return a
-hash reference of positive/negative keys.  If the word does not exist,
-return C<undef>.
+Get the positive/negative sentiment for a given word.  Return
+C<undef>, C<0> or C<1> for "does not exist", "is positive" or "is
+negative", respectively.
 
 =cut
 
@@ -422,11 +422,8 @@ sub get_word {
     $word = $self->_stemword($word)
         if $self->stem;
 
-    return exists $self->positive->wordlist->{$word} || exists $self->negative->wordlist->{$word}
-        ? {
-            positive => exists $self->positive->wordlist->{$word} ? 1 : 0,
-            negative => exists $self->negative->wordlist->{$word} ? 1 : 0,
-        }
+    return exists $self->positive->wordlist->{$word} ? 1
+        : exists $self->negative->wordlist->{$word} ? -1
         : undef;
 }
 
