@@ -367,7 +367,7 @@ This method sets the B<nrc_scores> and B<sentences> attributes.
 
 sub nrc_sentiment { shift->nrc_anaylze(@_) };
 
-sub nrc_anaylze {
+sub nrc_analyze {
     my ($self) = @_;
 
     my $null_state = { anger=>0, anticipation=>0, disgust=>0, fear=>0, joy=>0, negative=>0, positive=>0, sadness=>0, surprise=>0, trust=>0 };
