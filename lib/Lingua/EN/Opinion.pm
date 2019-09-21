@@ -35,10 +35,11 @@ use Try::Tiny;
 
   my $score = $opinion->get_word('foo');
   my ( $known, $unknown );
-  ( $score, $known, $unknown ) = $opinion->get_sentence('Mary had a little lamb.');
+  my $sentence = 'Mary had a little lamb.'
+  ( $score, $known, $unknown ) = $opinion->get_sentence($sentence);
 
   # NRC:
-  $opinion = Lingua::EN::Opinion->new( text => 'Mary had a little lamb...' );
+  $opinion = Lingua::EN::Opinion->new( text => "$sentence It's fleece was ..." );
   $opinion->nrc_analyze();
 
   $scores = $opinion->nrc_scores;
@@ -47,7 +48,8 @@ use Try::Tiny;
   $ratio = $opinion->ratio(1);
 
   $score = $opinion->nrc_get_word('happy');
-  $score = $opinion->nrc_get_sentence('The happy elf danced a jig.');
+  ( $score, $known, $unknown ) = $opinion->nrc_get_sentence($sentence);
+  $score = $opinion->nrc_get_sentence($sentence);
 
 =head1 DESCRIPTION
 
@@ -432,9 +434,12 @@ sub nrc_get_word {
 
 =head2 get_sentence
 
+  ( $score, $known, $unknown ) = $opinion->get_sentence($sentence);
   ( $score, $known, $unknown ) = $opinion->get_sentence( $sentence, $known, $unknown );
 
-Return the integer value for the summation of the words of the given sentence.
+Return the integer value for the summation of the words of the given
+sentence.  Also return B<known> and B<unknown> values for the number
+of familiar words.
 
 The B<known> and B<unknown> arguments refer to the L</familiarity> and
 are possibly incremented by this routine.
@@ -466,24 +471,38 @@ sub get_sentence {
 
 =head2 nrc_get_sentence
 
-  $values = $opinion->nrc_get_sentence($sentence);
+  ( $score, $known, $unknown ) = $opinion->nrc_get_sentence($sentence);
+  ( $score, $known, $unknown ) = $opinion->nrc_get_sentence( $sentence, $known, $unknown );
 
-Return the NRC emotion values for each word of the given sentence.
+Return the summed NRC emotion values for each word of the given
+sentence as a hash reference.  Also return B<known> and B<unknown>
+values for the number of familiar words.
 
 =cut
 
 sub nrc_get_sentence {
-    my ( $self, $sentence ) = @_;
+    my ( $self, $sentence, $known, $unknown ) = @_;
 
     my @words = _tokenize($sentence);
 
-    my %score;
+    my $score = {};
 
     for my $word ( @words ) {
-        $score{$word} = $self->nrc_get_word($word);
+        my $value = $self->nrc_get_word($word);
+
+        if ( $value ) {
+            $known++;
+
+            for my $key ( keys %$value ) {
+                $score->{$key} += $value->{$key};
+            }
+        }
+        else {
+            $unknown++;
+        }
     }
 
-    return \%score;
+    return $score, $known, $unknown;
 }
 
 =head2 ratio
