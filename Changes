@@ -2,6 +2,7 @@ Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
     - Fix SYNOPSIS code.
+    - Clean-up test code.
 
 0.1504 2019-09-20 13:03:45
     - Fix the eg/pos-neg code.
