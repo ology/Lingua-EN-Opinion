@@ -56,8 +56,8 @@ attributes.
 
 When run against the positive and negative classified training reviews
 in the dataset referenced under L</"SEE ALSO">, this module does ...
-okay.  Out of the 25k reviews, the F<eg/pos-neg> program gets about
-70% correct.
+okay.  Out of 25k reviews, the F<eg/pos-neg> program gets about 70%
+correct.
 
 =head1 ATTRIBUTES
 
