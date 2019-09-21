@@ -80,14 +80,14 @@ $expected = {
     fear => 0,
     joy => 0,
     negative => 0,
-    positive => 0,
+    positive => 1,
     sadness => 0,
     surprise => 0,
-    trust => 0,
+    trust => 2
 };
 
 $obj->nrc_analyze();
-is_deeply $obj->nrc_scores->[6], $expected, 'nrc_scores';
+is_deeply $obj->nrc_scores->[0], $expected, 'nrc_scores';
 is_deeply $obj->familiarity, { known => 27, unknown => 63 }, 'familiarity';
 is $obj->ratio, 0.3, 'known ratio';
 is $obj->ratio(1), 0.7, 'unknown ratio';
