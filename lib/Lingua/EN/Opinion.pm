@@ -265,12 +265,10 @@ This method sets the B<scores> and B<sentences> attributes.
 sub analyze {
     my ($self) = @_;
 
-    my @sentences = $self->_get_sentences();
-
     my @scores;
     my ( $known, $unknown ) = ( 0, 0 );
 
-    for my $sentence ( @sentences ) {
+    for my $sentence ( $self->_get_sentences ) {
         my @words = _tokenize($sentence);
 
         my $score = 0;
