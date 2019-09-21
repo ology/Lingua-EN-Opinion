@@ -364,14 +364,13 @@ sub nrc_analyze {
         my $score;
 
         for my $word ( @words ) {
-            $word = $self->_stemword($word)
-                if $self->stem;
+            my $value = $self->nrc_get_word($word);
 
-            if ( exists $self->emotion->wordlist->{$word} ) {
+            if ( $value ) {
                 $known++;
 
-                for my $key ( keys %{ $self->emotion->wordlist->{$word} } ) {
-                    $score->{$key} += $self->emotion->wordlist->{$word}{$key};
+                for my $key ( keys %$value ) {
+                    $score->{$key} += $value->{$key};
                 }
             }
             else {
