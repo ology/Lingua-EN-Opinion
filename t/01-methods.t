@@ -46,11 +46,11 @@ my $sentences = [
 ];
 
 $obj->analyze;
-my $x = $obj->sentences;
-is_deeply $x, $sentences, 'sentences';
-$x = $obj->scores;
-my $scores = [ 0, -1, -1, 1, 0, -1, 0, -2, -2, 1, 1 ];
-is_deeply $x, $scores, 'scores';
+my $got = $obj->sentences;
+is_deeply $got, $sentences, 'sentences';
+$got = $obj->scores;
+my $expected = [ 0, -1, -1, 1, 0, -1, 0, -2, -2, 1, 1 ];
+is_deeply $got, $expected, 'scores';
 is_deeply $obj->familiarity, { known => 10, unknown => 80 }, 'familiarity';
 is sprintf( '%.3f', $obj->ratio ), 0.111, 'known ratio';
 is sprintf( '%.3f', $obj->ratio(1) ), 0.889, 'unknown ratio';
@@ -60,20 +60,20 @@ my $text = join "\n", @$sentences;
 $obj = Lingua::EN::Opinion->new( text => $text );
 isa_ok $obj, 'Lingua::EN::Opinion';
 $obj->analyze;
-$x = $obj->sentences;
-is_deeply $x, $sentences, 'sentences';
-$x = $obj->scores;
-$scores = [ 0, -1, -1, 1, 0, -1, 0, -2, -2, 1, 1 ];
-is_deeply $x, $scores, 'scores';
+$got = $obj->sentences;
+is_deeply $got, $sentences, 'sentences';
+$got = $obj->scores;
+$expected = [ 0, -1, -1, 1, 0, -1, 0, -2, -2, 1, 1 ];
+is_deeply $got, $expected, 'scores';
 is_deeply $obj->familiarity, { known => 10, unknown => 80 }, 'familiarity';
 is sprintf( '%.3f', $obj->ratio ), 0.111, 'known ratio';
 is sprintf( '%.3f', $obj->ratio(1) ), 0.889, 'unknown ratio';
 
-$x = $obj->averaged_score(2);
-$scores = [ -0.5, 0, -0.5, -1, -0.5, 1 ];
-is_deeply $x, $scores, 'averaged_score';
+$got = $obj->averaged_score(2);
+$expected = [ -0.5, 0, -0.5, -1, -0.5, 1 ];
+is_deeply $got, $expected, 'averaged_score';
 
-$scores = {
+$expected = {
     anger => 0,
     anticipation => 1,
     disgust => 0,
@@ -87,22 +87,22 @@ $scores = {
 };
 
 $obj->nrc_sentiment();
-is_deeply $obj->nrc_scores->[6], $scores, 'nrc_scores';
+is_deeply $obj->nrc_scores->[6], $expected, 'nrc_scores';
 is_deeply $obj->familiarity, { known => 27, unknown => 63 }, 'familiarity';
 is $obj->ratio, 0.3, 'known ratio';
 is $obj->ratio(1), 0.7, 'unknown ratio';
 
-$x = $obj->get_word('foo');
-is_deeply $x, undef, 'get_word';
+$got = $obj->get_word('foo');
+is_deeply $got, undef, 'get_word';
 
-$x = $obj->nrc_get_word('foo');
-is_deeply $x, undef, 'nrc_get_word';
+$got = $obj->nrc_get_word('foo');
+is_deeply $got, undef, 'nrc_get_word';
 
-$x = $obj->get_word('happy');
-my $expected = { negative => 0, positive => 1 };
-is_deeply $x, $expected, 'get_word';
+$got = $obj->get_word('happy');
+$expected = { negative => 0, positive => 1 };
+is_deeply $got, $expected, 'get_word';
 
-$x = $obj->nrc_get_word('happy');
+$got = $obj->nrc_get_word('happy');
 $expected = {
     anger        => 0,
     anticipation => 1,
@@ -115,10 +115,10 @@ $expected = {
     surprise     => 0,
     trust        => 1,
 };
-is_deeply $x, $expected, 'nrc_get_word';
+is_deeply $got, $expected, 'nrc_get_word';
 
 $text = 'I am actually very happy today.';
-$x = $obj->get_sentence($text);
+$got = $obj->get_sentence($text);
 $expected = {
     i        => undef,
     am       => undef,
@@ -127,9 +127,9 @@ $expected = {
     happy    => { 'negative' => 0, 'positive' => 1 },
     today    => undef,
 };
-is_deeply $x, $expected, 'get_sentence';
+is_deeply $got, $expected, 'get_sentence';
 
-$x = $obj->nrc_get_sentence($text);
+$got = $obj->nrc_get_sentence($text);
 $expected = {
     i        => undef,
     am       => undef,
@@ -160,6 +160,6 @@ $expected = {
         trust        => 0,
     },
 };
-is_deeply $x, $expected, 'nrc_get_sentence';
+is_deeply $got, $expected, 'nrc_get_sentence';
 
 done_testing();
