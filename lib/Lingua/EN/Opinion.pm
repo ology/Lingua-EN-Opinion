@@ -46,8 +46,8 @@ use Try::Tiny;
   $ratio = $opinion->ratio();
   $ratio = $opinion->ratio(1);
 
-  $score = $opinion->nrc_get_word('foo');
-  $score = $opinion->nrc_get_sentence('Mary had a little lamb.');
+  $score = $opinion->nrc_get_word('happy');
+  $score = $opinion->nrc_get_sentence('The happy elf danced a jig.');
 
 =head1 DESCRIPTION
 
