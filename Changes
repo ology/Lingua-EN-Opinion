@@ -4,6 +4,7 @@ Revision history for Lingua-EN-Opinion
     - Improve documentation.
     - Multiple code fixes... `git log -p` for the intrepid.
     - Add tests.
+    - Improve eg/ code.
 
 0.1505 2019-09-20 17:59:23
     - Fix SYNOPSIS code.
