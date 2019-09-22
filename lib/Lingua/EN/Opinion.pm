@@ -261,7 +261,8 @@ Create a new C<Lingua::EN::Opinion> object.
 
 Measure the positive/negative emotional sentiment of text.
 
-This method sets the B<scores> and B<sentences> attributes.
+This method sets the B<scores>, B<familiarity> and B<sentences>
+attributes.
 
 =cut
 
@@ -344,7 +345,8 @@ This is given by a C<0/1> list of these 10 emotional elements:
   surprise
   trust
 
-This method sets the B<nrc_scores> and B<sentences> attributes.
+This method sets the B<nrc_scores>, B<familiarity> and B<sentences>
+attributes.
 
 =cut
 
