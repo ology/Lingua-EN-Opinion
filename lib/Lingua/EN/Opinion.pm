@@ -518,7 +518,7 @@ sub ratio {
   @words = $opinion->tokenize($sentence);
 
 Drop punctuation and digits, then split the sentence by whitespace and
-return the resulting lowercased "word" list.
+return the resulting lower-cased "word" list.
 
 =cut
 
