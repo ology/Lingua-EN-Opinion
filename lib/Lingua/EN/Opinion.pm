@@ -350,7 +350,7 @@ attributes.
 
 =cut
 
-sub nrc_sentiment { shift->nrc_anaylze(@_) };
+sub nrc_sentiment { shift->nrc_analyze(@_) };
 
 sub nrc_analyze {
     my ($self) = @_;
