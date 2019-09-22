@@ -355,7 +355,7 @@ sub nrc_sentiment { shift->nrc_anaylze(@_) };
 sub nrc_analyze {
     my ($self) = @_;
 
-    my $null_state = { anger=>0, anticipation=>0, disgust=>0, fear=>0, joy=>0, negative=>0, positive=>0, sadness=>0, surprise=>0, trust=>0 };
+    my $null_state = { map { $_ => 0 } qw/ anger anticipation disgust fear joy negative positive sadness surprise trust / };
 
     my @scores;
     my ( $known, $unknown ) = ( 0, 0 );
