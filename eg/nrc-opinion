@@ -6,7 +6,7 @@ use Lingua::EN::Opinion;
 use List::Util qw( max );
 
 my $input_file = shift || die "Usage: perl $0 /some/file.txt\n";
-my $emotion    = shift || 'anger,anticipation,disgust,fear,joy,sadness,surprise,trust';
+my $emotion    = shift || 'anger,anticipation,disgust,fear,joy,sadness,surprise,trust'; # positive,negative
 
 my @emotions = split /,/, $emotion;
 
@@ -31,7 +31,7 @@ for my $value ( @emotions ) {
     my $i = 0;
     print "Sentences with the most $value:\n";
     for my $sentence ( @{ $opinion->sentences } ) {
-        next if $score{$sentence}->{$value} < $max{$value};
+        next if !exists $score{$sentence}->{$value} || $score{$sentence}->{$value} < $max{$value};
         $i++;
         print "\t$i. ($score{$sentence}->{$value}) $sentence\n\n";
     }
