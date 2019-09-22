@@ -35,7 +35,7 @@ use Try::Tiny;
 
   my $score = $opinion->get_word('foo');
   my ( $known, $unknown );
-  my $sentence = 'Mary had a little lamb.'
+  my $sentence = 'Mary had a little lamb.';
   ( $score, $known, $unknown ) = $opinion->get_sentence($sentence);
 
   # NRC:
