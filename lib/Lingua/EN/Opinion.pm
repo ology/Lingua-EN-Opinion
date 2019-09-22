@@ -421,12 +421,12 @@ sub nrc_get_word {
   ( $score, $known, $unknown ) = $opinion->get_sentence($sentence);
   ( $score, $known, $unknown ) = $opinion->get_sentence( $sentence, $known, $unknown );
 
-Return the integer value for the summation of the words of the given
+Return the integer value for the sum of the word scores of the given
 sentence.  Also return B<known> and B<unknown> values for the number
 of familiar words.
 
 The B<known> and B<unknown> arguments refer to the L</familiarity> and
-are possibly incremented by this routine.
+are incremented by this routine.
 
 =cut
 
