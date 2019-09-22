@@ -20,13 +20,15 @@ my $template =<<HTML;
 <br>
 <input type="submit" value="Evaluate" />
 </form>
-<pre>[% score %]</pre>
-<p>
 NRC: <pre>[% nrc_score %]</pre>
+<p>
+<pre>[% familiar %]</pre>
+<p>
+Pos/Neg: <pre>[% score %]</pre>
 </body></html>
 HTML
 
-my $default = 'The quick onyx goblin jumps over the lazy dwarf.';
+my $default = 'I am not happy. It is very unhappy.';
 
 builder {
     mount '/' => sub {
@@ -35,28 +37,26 @@ builder {
 
         my $opinion = Lingua::EN::Opinion->new();
 
-        my $score = $opinion->get_sentence($sentence);
-        for my $item ( keys %$score ) {
-            if ( $score->{$item} ) {
-                $score->{$item} = $score->{$item}{positive} ? 1 : -1;
-            }
-            else {
-                delete $score->{$item};
-            }
+        my @words = $opinion->tokenize($sentence);
+
+        my $score = {};
+        for my $word ( @words ) {
+            my $word_score = $opinion->get_word($word);
+            next unless defined $word_score;
+            $score->{$word} += $word_score;
         }
 
-        my $nrc_score = $opinion->nrc_get_sentence($sentence);
-        for my $item ( keys %$nrc_score ) {
-            delete $nrc_score->{$item}
-                unless $nrc_score->{$item};
-        }
+        my ( $nrc_score, $known, $unknown ) = $opinion->nrc_get_sentence($sentence);
 
         my $body;
         Template->new->process(
             \$template,
-            {   text      => $sentence,
+            {
+                text      => $sentence,
+                familiar  => Dumper( { known => $known, unknown => $unknown } ),
                 score     => Dumper($score),
-                nrc_score => Dumper($nrc_score), },
+                nrc_score => Dumper($nrc_score),
+            },
             \$body
         );
 
