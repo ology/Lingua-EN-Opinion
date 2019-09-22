@@ -435,7 +435,7 @@ are incremented by this routine.
 sub get_sentence {
     my ( $self, $sentence, $known, $unknown ) = @_;
 
-    my @words = _tokenize($sentence);
+    my @words = $self->tokenize($sentence);
 
     my $score = 0;
 
@@ -469,7 +469,7 @@ values for the number of familiar words.
 sub nrc_get_sentence {
     my ( $self, $sentence, $known, $unknown ) = @_;
 
-    my @words = _tokenize($sentence);
+    my @words = $self->tokenize($sentence);
 
     my $score = {};
 
@@ -513,8 +513,17 @@ sub ratio {
     return $ratio;
 }
 
-sub _tokenize {
-    my ($sentence) = @_;
+=head2 tokenize
+
+  @words = $opinion->tokenize($sentence);
+
+Drop punctuation and digits, then split the sentence by whitespace and
+return the resulting lowercased "word" list.
+
+=cut
+
+sub tokenize {
+    my ( $self, $sentence ) = @_;
     $sentence =~ s/[[:punct:]]//g;  # Drop punctuation
     $sentence =~ s/\d//g;           # Drop digits
     my @words = grep { $_ } map { lc $_ } split /\s+/, $sentence;
