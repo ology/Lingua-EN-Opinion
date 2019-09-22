@@ -359,24 +359,9 @@ sub nrc_analyze {
     my ( $known, $unknown ) = ( 0, 0 );
 
     for my $sentence ( $self->_get_sentences ) {
-        my @words = _tokenize($sentence);
+        my $score = {};
 
-        my $score;
-
-        for my $word ( @words ) {
-            my $value = $self->nrc_get_word($word);
-
-            if ( $value ) {
-                $known++;
-
-                for my $key ( keys %$value ) {
-                    $score->{$key} += $value->{$key};
-                }
-            }
-            else {
-                $unknown++;
-            }
-        }
+        ( $score, $known, $unknown ) = $self->nrc_get_sentence( $sentence, $known, $unknown );
 
         $score = $null_state
             unless $score;
