@@ -1,6 +1,8 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+
+0.1600 2019-09-22 08:17:06
     - Improve documentation.
     - Multiple code fixes... `git log -p` for the intrepid.
     - Add tests.
