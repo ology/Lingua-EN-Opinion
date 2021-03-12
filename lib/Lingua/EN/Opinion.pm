@@ -2,7 +2,7 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the emotional sentiment of text
 
-our $VERSION = '0.1700';
+our $VERSION = '0.1701';
 
 use Moo;
 use strictures 2;
@@ -446,6 +446,9 @@ sub nrc_get_word {
   $opinion->nrc_set_word($word => $value);
 
 Set the NRC emotional sentiment for a given word.
+
+The B<value> must be given as a hash-reference with any of the keys
+detailed in the C<nrc_analyze> method.
 
 =cut
 
