@@ -397,6 +397,26 @@ sub get_word {
         : undef;
 }
 
+=head2 set_word
+
+  $opinion->set_word($word => $value);
+
+Set the positive/negative sentiment for a given word as C<1>, C<-1>
+or C<undef>.
+
+=cut
+
+sub set_word {
+    my ( $self, $word, $value ) = @_;
+
+    if ($value > 0) {
+        $self->positive->wordlist->{$word} = $value;
+    }
+    else {
+        $self->negative->wordlist->{$word} = $value;
+    }
+}
+
 =head2 nrc_get_word
 
   $sentiment = $opinion->nrc_get_word($word);
@@ -416,6 +436,42 @@ sub nrc_get_word {
     return exists $self->emotion->wordlist->{$word}
         ? $self->emotion->wordlist->{$word}
         : undef;
+}
+
+=head2 nrc_set_word
+
+  $opinion->nrc_set_word($word => $value);
+
+Set the NRC emotional sentiment for a given word.
+
+=cut
+
+sub nrc_set_word {
+    my ( $self, $word, $value ) = @_;
+
+    my %emotion;
+
+    for my $emotion (qw(
+        anger
+        anticipation
+        disgust
+        fear
+        joy
+        negative
+        positive
+        sadness
+        surprise
+        trust
+    )) {
+        if (exists $value->{$emotion}) {
+            $emotion{$emotion} = $value->{$emotion};
+        }
+        else {
+            $emotion{$emotion} = 0;
+        }
+    }
+
+    $self->emotion->wordlist->{$word} = \%emotion;
 }
 
 =head2 get_sentence
