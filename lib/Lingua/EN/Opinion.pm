@@ -51,6 +51,9 @@ use Try::Tiny;
   ( $score, $known, $unknown ) = $opinion->nrc_get_sentence($sentence);
   $score = $opinion->nrc_get_sentence($sentence);
 
+  $opinion->set_word(foo => 1);
+  $opinion->nrc_set_word(foo => { anger => 0, etc => '...' });
+
 =head1 DESCRIPTION
 
 A C<Lingua::EN::Opinion> object measures the emotional sentiment of
