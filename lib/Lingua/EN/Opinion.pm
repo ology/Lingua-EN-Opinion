@@ -637,7 +637,7 @@ L<https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon>
 
 L<http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm>
 
-L<http://techn.ology.net/book-of-revelation-sentiment-analysis/> is a write-up using this technique.
+L<https://ology.github.io/2018/03/04/book-of-revelation-sentiment-analysis/> is a write-up using this technique.
 
 L<https://ai.stanford.edu/~amaas/data/sentiment/> is the "Large Movie Review Dataset"
 
