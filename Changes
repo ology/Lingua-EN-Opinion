@@ -1,6 +1,8 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+
+0.1702 2022-10-21 22:45:53
     - Update SEE ALSO link.
     - Avoid implicit imports.
 
