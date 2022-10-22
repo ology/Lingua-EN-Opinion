@@ -2,21 +2,22 @@ package Lingua::EN::Opinion;
 
 # ABSTRACT: Measure the emotional sentiment of text
 
-our $VERSION = '0.1701';
+our $VERSION = '0.1702';
 
 use Moo;
-use strictures 2;
-use namespace::clean;
 
 use Lingua::EN::Opinion::Positive;
 use Lingua::EN::Opinion::Negative;
 use Lingua::EN::Opinion::Emotion;
 
-use Carp;
+use Carp qw( croak );
 use File::Slurper qw( read_text );
 use Lingua::EN::Sentence qw( get_sentences );
 use Statistics::Lite qw( mean );
-use Try::Tiny;
+use Try::Tiny qw( try catch );
+
+use strictures 2;
+use namespace::clean;
 
 =head1 SYNOPSIS
 
