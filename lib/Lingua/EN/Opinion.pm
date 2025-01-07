@@ -142,7 +142,7 @@ sub _build_stemmer {
         return $stemmer;
     }
     catch {
-        croak 'The WordNet::QueryData and WordNet::stem modules must be installed and working to enable stemming support';
+        croak "The WordNet::QueryData and WordNet::stem modules must be installed and working to enable stemming support: $_";
     };
 }
 
