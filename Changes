@@ -1,6 +1,7 @@
 Revision history for Lingua-EN-Opinion
 
 {{$NEXT}}
+    - Croak the actual try-catch error, please.
 
 0.1702 2022-10-21 22:45:53
     - Update SEE ALSO link.
